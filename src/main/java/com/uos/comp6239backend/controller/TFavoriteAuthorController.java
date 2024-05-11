@@ -5,10 +5,7 @@ import com.uos.comp6239backend.utils.ResponseMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -27,6 +24,10 @@ public class TFavoriteAuthorController {
     @Autowired
     private TFavoriteAuthorService tFavoriteAuthorService;
 
+    @GetMapping("/deviceInfo")
+    public ResponseMap.ResultData deviceInfo(@RequestParam Integer deviceId){
+        return ResponseMap.ok();
+    }
     /**
      *根据读者ID查询其所喜欢的作者
      * @param values

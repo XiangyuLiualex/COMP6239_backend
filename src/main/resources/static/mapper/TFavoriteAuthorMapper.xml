@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uos.comp6239backend.mapper.TLibraryMapper">
+<mapper namespace="com.uos.comp6239backend.mapper.TFavoriteAuthorMapper">
 
 
 
 <!--根据读者ID查询其所喜欢的作者-->
   <select id="tFavoriteAuthorList" resultType="com.uos.comp6239backend.tdata.entity.TUsers">
     select tu.*
-    from t_author_reader tar,t_user tu
-    where  tar.is_use=1 and tu.is_use=1 and tar.reader_id=#{readerId} and tar.reader_id=tu.reader_id
+    from t_author_reader tar,t_users tu
+    where  tar.is_used=1 and tu.is_used=1 and tar.reader_id=#{readerId} and tar.reader_id=tu.user_id
   </select>
 
 <!--  根据作者名模糊查询其所喜欢的作者 -->
-  <select id="tFavoriteAuthorListByAuthorName" resultType="com.thhy.danfoss.tdata.entity.TUsers">
+  <select id="tFavoriteAuthorListByAuthorName" resultType="com.uos.comp6239backend.tdata.entity.TUsers">
     select tu.*
-    from t_author_reader tar,t_user tu
-    where  tar.is_use=1 and tu.is_use=1 and tar.reader_id=#{readerId} and tar.reader_id=tu.reader_id
+    from t_author_reader tar,t_users tu
+    where  tar.is_used=1 and tu.is_used=1 and tar.reader_id=#{readerId} and tar.reader_id=tu.reader_id
     <if test="AuthorName != null and AuthorName != ''">
         and tu.username like CONCAT('%',#{AuthorName},'%')
         and tu.user_type = 2

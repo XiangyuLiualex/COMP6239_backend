@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uos.comp6239backend.mapper.TLibraryMapper">
+<mapper namespace="com.uos.comp6239backend.mapper.TChapterContentMapper">
 
 
 <!--  根据故事ID显示本故事的所有章节 -->
   <select id="tChapterListByStoryId" resultType="com.uos.comp6239backend.tdata.entity.TChapter">
-    select tc.* from t_chapter tc where is_use=1 and story_id=#{storyId} order by tc.chapter_number desc
+    select tc.* from t_chapter tc where is_used=1 and story_id=#{storyId} order by tc.chapter_number desc
   </select>
 
 <!--  根据章节ID显示本章节的所有内容 -->
   <select id="tContentListByChapterId" resultType="com.uos.comp6239backend.tdata.entity.TContent">
-    select tc.* from t_content tc where is_use=1 and chapter_id=#{chapterId} order by tc.order desc
+    select tc.* from t_content tc where is_used=1 and chapter_id=#{chapterId} order by tc.order desc
   </select>
 
   <!--  根据章节ID显示本章节的所有选项 -->
   <select id="tOptionListByChapterId" resultType="com.uos.comp6239backend.tdata.entity.TOption">
-    select topt.* from t_option topt where is_use=1 and chapter_id=#{chapterId} order by topt.order desc
+    select topt.* from t_option topt where is_used=1 and chapter_id=#{chapterId} order by topt.order desc
   </select>
 
 

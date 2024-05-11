@@ -5,8 +5,8 @@
 <!--暂时还有问题-->
   <select id="tLibraryList" resultType="com.uos.comp6239backend.tdata.entity.TStorys">
     select ts.*
-    from t_story ts,t_library tl,t_user,tu
-    where  ts.is_use=1 and tl.is_use=1 and tu.is_use=1 and tl.story_id = ts.story_id and tu.user_id = tl.reader_id
+    from t_story ts,t_library tl,t_users,tu
+    where  ts.is_used=1 and tl.is_used=1 and tu.is_used=1 and tl.story_id = ts.story_id and tu.user_id = tl.reader_id
 
   </select>
 

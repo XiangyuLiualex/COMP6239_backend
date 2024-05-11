@@ -31,6 +31,7 @@ public class TFavoriteAuthorServiceImpl implements TFavoriteAuthorService {
     @Override
     public ResponseMap.ResultData tFavoriteAuthorList(Map<String, Object> values) {
         List<TUsers> favoriteAuthorList = tFavoriteAuthorMapper.tFavoriteAuthorList(values);
+        log.info("根据读者ID查询其所喜欢的作者:"+values);
         return ResponseMap.ok(favoriteAuthorList);
     }
 
