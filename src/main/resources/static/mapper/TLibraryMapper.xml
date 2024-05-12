@@ -2,15 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.uos.comp6239backend.mapper.TLibraryMapper">
 
-<!--根据读者ID展示图书馆-->
+  <!--根据读者ID展示其收藏的所有的书和剧本作者，阅读进度-->
+<select id="selectReaderStoryDetail" parameterType="java.util.Map" resultType="com.uos.comp6239backend.tdata.entity.TStoryDetail">
+    SELECT DISTINCT
+        s.story_id,
+        s.story_name,
+        s.story_description,
+        s.story_trends,
+        s.story_cover_url,
+        u.user_id AS author_id,
+        u.username AS author_name,
+        rsh.current_progress
+    FROM
+        t_story s
+    JOIN
+        t_users u ON s.author_id = u.user_id
+    JOIN
+        t_library tl ON tl.story_id = s.story_id AND tl.is_used = 1
+    JOIN
+        t_reader_story_history rsh ON rsh.story_id = s.story_id
+    WHERE
+        rsh.reader_id = #{readerId,jdbcType=INTEGER}
+        AND rsh.is_used = 1
+</select>
+
+
+
+  <!--根据读者ID展示图书馆-->
   <select id="tLibraryList" resultType="com.uos.comp6239backend.tdata.entity.TStorys">
-    select ts.*,tas.author_id
-    from t_story ts,t_library tl,t_users tu,t_author_story tas
+    select ts.*
+    from t_story ts,t_library tl,t_users tu
     where
     reader_id = #{readerId,jdbcType=INTEGER} and
     ts.is_used=1 and tl.is_used=1 and tu.is_used=1 and
-    tl.story_id = ts.story_id and tu.user_id = tl.reader_id and
-    tas.story_id = tl.story_id
+    tl.story_id = ts.story_id and tu.user_id = tl.reader_id
 
   </select>
 
