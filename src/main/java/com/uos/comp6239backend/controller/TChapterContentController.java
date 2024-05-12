@@ -29,6 +29,29 @@ public class TChapterContentController {
     private TChapterContentService tChapterContentService;
 
     /**
+     *根据故事ID显示本故事的基本信息
+     * @param values
+     * @return
+     */
+    @PostMapping("/tStoryByStoryId")
+    @ApiOperation(value = "根据故事ID显示本故事的基本信息", notes = "根据故事ID显示本故事的基本信息")
+    public ResponseMap.ResultData tStoryByStoryId(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tChapterContentService.tStoryByStoryId(values);
+    }
+
+    /**
+     *根据章节ID显示本章节的基本信息
+     * @param values
+     * @return
+     */
+    @PostMapping("/tChapterByChapterId")
+    @ApiOperation(value = "根据章节ID显示本章节的基本信息", notes = "根据章节ID显示本章节的基本信息")
+    public ResponseMap.ResultData tChapterByChapterId(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tChapterContentService.tChapterByChapterId(values);
+    }
+
+
+    /**
      *根据故事ID显示本故事的所有章节
      * @param values
      * @return

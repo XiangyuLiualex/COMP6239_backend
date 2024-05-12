@@ -5,6 +5,7 @@ import com.uos.comp6239backend.service.TChapterContentService;
 import com.uos.comp6239backend.tdata.entity.TChapter;
 import com.uos.comp6239backend.tdata.entity.TContent;
 import com.uos.comp6239backend.tdata.entity.TOption;
+import com.uos.comp6239backend.tdata.entity.TStorys;
 import com.uos.comp6239backend.utils.ResponseMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,23 @@ public class TChapterContentServiceImpl implements TChapterContentService {
     private TChapterContentMapper tChapterContentMapper;
 
 
-//    根据故事ID显示本故事的所有章节
+//    根据故事ID显示本故事的基本信息
+    @Override
+    public ResponseMap.ResultData tStoryByStoryId(Map<String, Object> values) {
+        TStorys tStorys = tChapterContentMapper.tStoryByStoryId(values);
+        log.info("根据故事ID显示本故事的基本信息:"+values);
+        return ResponseMap.ok(tStorys);
+    }
+
+//    根据章节ID显示本章节的基本信息
+    @Override
+    public ResponseMap.ResultData tChapterByChapterId(Map<String, Object> values) {
+        TChapter tChapter = tChapterContentMapper.tChapterByChapterId(values);
+        log.info("根据章节ID显示本章节的基本信息:"+values);
+        return ResponseMap.ok(tChapter);
+    }
+
+    //    根据故事ID显示本故事的所有章节
     @Override
     public ResponseMap.ResultData tChapterListByStoryId(Map<String, Object> values) {
         List<TChapter> tChapterList = tChapterContentMapper.tChapterListByStoryId(values);

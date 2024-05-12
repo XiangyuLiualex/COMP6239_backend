@@ -12,6 +12,8 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface TChapterContentService {
+    ResponseMap.ResultData tStoryByStoryId(Map<String, Object> values);
+    ResponseMap.ResultData tChapterByChapterId(Map<String, Object> values);
     ResponseMap.ResultData tChapterListByStoryId(Map<String, Object> values);
     ResponseMap.ResultData tContentListByChapterId(Map<String, Object> values);
     ResponseMap.ResultData tOptionListByChapterId(Map<String, Object> values);

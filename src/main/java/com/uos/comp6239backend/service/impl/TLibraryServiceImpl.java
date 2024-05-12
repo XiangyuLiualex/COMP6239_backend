@@ -3,6 +3,7 @@ package com.uos.comp6239backend.service.impl;
 import com.uos.comp6239backend.mapper.TLibraryMapper;
 import com.uos.comp6239backend.mapper.TUsersMapper;
 import com.uos.comp6239backend.service.TLibraryService;
+import com.uos.comp6239backend.tdata.entity.TStoryDetail;
 import com.uos.comp6239backend.tdata.entity.TStorys;
 import com.uos.comp6239backend.tdata.entity.TStorysForUiState;
 import com.uos.comp6239backend.utils.ResponseMap;
@@ -29,7 +30,15 @@ public class TLibraryServiceImpl implements TLibraryService {
     @Autowired
     private TLibraryMapper tLibraryMapper;
 
-//    根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度
+    //根据读者ID展示其收藏的所有的书和剧本作者，阅读进度,返回TStoryDetail
+    @Override
+    public ResponseMap.ResultData selectReaderStoryDetail(Map<String, Object> values) {
+        List<TStoryDetail> tStoryDetails = tLibraryMapper.selectReaderStoryDetail(values);
+        log.info("根据读者ID展示其收藏的所有的书和剧本作者，阅读进度,返回TStoryDetail:"+values);
+        return ResponseMap.ok(tStoryDetails);
+    }
+
+    //    根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度
     @Override
     public ResponseMap.ResultData tLibraryListReaderStoryForUiState(Map<String, Object> values) {
         List<TStorysForUiState> tStorysForUiStates = tLibraryMapper.tLibraryListReaderStoryForUiState(values);

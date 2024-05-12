@@ -1,5 +1,6 @@
 package com.uos.comp6239backend.mapper;
 
+import com.uos.comp6239backend.tdata.entity.TStoryDetail;
 import com.uos.comp6239backend.tdata.entity.TStorys;
 import com.uos.comp6239backend.tdata.entity.TStorysForUiState;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,6 +19,7 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface TLibraryMapper {
+    List<TStoryDetail> selectReaderStoryDetail(Map<String, Object> values);
 
     List<TStorysForUiState> tLibraryListReaderStoryForUiState(Map<String, Object> values);
 
