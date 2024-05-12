@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public interface TAuthorChapterContentService {
 
-//    ResponseMap.ResultData tAuthorUpdateStory(TAuthorStorys values);
+    ResponseMap.ResultData tAuthorUpdateStory(TAuthorStorys values);
     ResponseMap.ResultData tAuthorStorysByAuthorId(Map<String, Object> values);
     ResponseMap.ResultData tAuthorStoryByStoryId(Map<String, Object> values);
     ResponseMap.ResultData tAuthorChapterByChapterId(Map<String, Object> values);

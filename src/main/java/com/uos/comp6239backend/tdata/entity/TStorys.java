@@ -57,4 +57,10 @@ public class TStorys  implements Serializable {
     @ApiModelProperty(value = "剧本作者ID")
     private Integer authorId;
 
+    /**
+     * 剧本isUsed
+     */
+    @ApiModelProperty(value = "是否出版")
+    private Integer isUsed;
+
 }

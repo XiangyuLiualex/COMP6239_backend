@@ -33,6 +33,74 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
 
 
 
+    public ResponseMap.ResultData tAuthorUpdateStory(TAuthorStorys values){
+        TStorys newStory=new TStorys();
+        newStory.setStoryName(values.getStoryName());
+        newStory.setStoryDescription(values.getStoryDescription());
+        newStory.setStoryTrends(-1);
+        newStory.setStoryCoverUrl("");
+        newStory.setAuthorId(values.getAuthorId());
+        newStory.setIsUsed(values.getIsUsed());
+        if(values.getStoryId()>0){
+            newStory.setStoryId(values.getStoryId());
+//            Update story
+
+        }else{
+//            Insert story
+        }
+
+//        update TStory to DB
+        List<TChapter> insertChapterList=new ArrayList<>();
+        List<TChapter> updateChapterList=new ArrayList<>();
+        List<TContent> insertContentList=new ArrayList<>();
+        List<TOption> insertOptionList=new ArrayList<>();
+        for(TAuthorChapter chapter: values.getChapterList()){
+            TChapter newChapter=new TChapter();
+            newChapter.setChapterTitle(chapter.getChapterTitle());
+            newChapter.setStoryId(chapter.getStoryId());
+            newChapter.setIsEnd(chapter.getIsEnd());
+            newChapter.setIsUsed(1);
+            if(chapter.getChapterId()>0) {
+                newChapter.setChapterId(chapter.getChapterId());
+                updateChapterList.add(newChapter);
+
+                //删除此chapter.getChapterId()对应的所有content和option
+            }else{
+                insertChapterList.add(newChapter);
+            }
+            int i=0;
+            for(TContent content: chapter.getTContentList()){
+                TContent newContent=new TContent();
+                newContent.setChapterId(content.getChapterId());
+                newContent.setContentData(content.getContentData());
+                newContent.setContentType(content.getContentType());
+                newContent.setOrder(i);
+                newContent.setIsUsed(1);
+                insertContentList.add(newContent);
+                i++;
+            }
+            i=0;
+            for(TOption option: chapter.getTOptionList()){
+                TOption newOption=new TOption();
+                newOption.setChapterId(option.getOptionId());
+                newOption.setOptionName(option.getOptionName());
+                newOption.setNextChapterId(option.getNextChapterId());
+                newOption.setOrder(i);
+                newOption.setIsUsed(1);
+                insertOptionList.add(newOption);
+                i++;
+            }
+        }
+//        Update chapterList
+//        Insert chapterlist
+//        Insert optionList
+//        insert contentList
+
+
+        return ResponseMap.ok();
+    }
+
+
     @Override
     public ResponseMap.ResultData tAuthorStorysByAuthorId(Map<String, Object> values){
         List<Integer> storyIdList= tAuthorChapterContentMapper.tAuthorStorysByAuthorId(values);

@@ -58,6 +58,16 @@ public class TAuthorStorys implements Serializable {
     @ApiModelProperty(value = "剧本作者ID")
     private Integer authorId;
 
+    /**
+     * 剧本作者ID
+     */
+    @ApiModelProperty(value = "ALl chapter")
     private List<TAuthorChapter> chapterList;
+
+    /**
+     * 剧本作者ID
+     */
+    @ApiModelProperty(value = "isUsed")
+    private Integer isUsed;
 
 }
