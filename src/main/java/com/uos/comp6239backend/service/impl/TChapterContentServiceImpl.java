@@ -29,27 +29,35 @@ public class TChapterContentServiceImpl implements TChapterContentService {
     private TChapterContentMapper tChapterContentMapper;
 
 
+//    根据故事ID显示本故事的所有章节
     @Override
     public ResponseMap.ResultData tChapterListByStoryId(Map<String, Object> values) {
         List<TChapter> tChapterList = tChapterContentMapper.tChapterListByStoryId(values);
+        log.info("根据故事ID显示本故事的所有章节:"+values);
         return ResponseMap.ok(tChapterList);
     }
 
+//    根据章节ID显示本章节的所有内容
     @Override
     public ResponseMap.ResultData tContentListByChapterId(Map<String, Object> values) {
         List<TContent> tContentList = tChapterContentMapper.tContentListByChapterId(values);
+        log.info("根据章节ID显示本章节的所有内容:"+values);
         return ResponseMap.ok(tContentList);
     }
 
+//    根据章节ID显示本章节的所有选项
     @Override
     public ResponseMap.ResultData tOptionListByChapterId(Map<String, Object> values) {
         List<TOption> tOptionList = tChapterContentMapper.tOptionListByChapterId(values);
+        log.info("根据章节ID显示本章节的所有选项:"+values);
         return ResponseMap.ok(tOptionList);
     }
 
+//    根据故事ID和章节名模糊查询章节
     @Override
     public ResponseMap.ResultData tChapterByStoryIdAndChapterTitle(Map<String, Object> values) {
         List<TChapter> tChapterList = tChapterContentMapper.tChapterByStoryIdAndChapterTitle(values);
+        log.info("根据故事ID和章节名模糊查询章节:"+values);
         return ResponseMap.ok(tChapterList);
     }
 }

@@ -8,7 +8,7 @@
   <select id="tFavoriteAuthorList" resultType="com.uos.comp6239backend.tdata.entity.TUsers">
     select tu.*
     from t_author_reader tar,t_users tu
-    where  tar.is_used=1 and tu.is_used=1 and tar.reader_id=#{readerId} and tar.reader_id=tu.user_id
+    where  tar.is_used=1 and tu.is_used=1 and tar.reader_id=#{readerId} and tar.author_id=tu.user_id
   </select>
 
 <!--  根据作者名模糊查询其所喜欢的作者 -->
@@ -52,7 +52,7 @@
 
 <!--  根据读者ID和作者ID删除某项喜欢的作者-->
   <update id="tFavoriteAuthorDel"  parameterType="java.util.Map">
-    update t_library set is_used = 0
+    update t_author_reader tar set is_used = 0
     where reader_id = #{readerId,jdbcType=INTEGER} and author_id = #{authorId,jdbcType=INTEGER}
   </update>
 

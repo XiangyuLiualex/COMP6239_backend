@@ -10,6 +10,7 @@
 
   </select>
 
+<!--  收藏某个剧本-->
   <insert id="tLibraryInsert" parameterType="java.util.Map">
     insert into t_library
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -36,6 +37,7 @@
     </trim>
   </insert>
 
+<!--  取消收藏某个剧本-->
   <update id="tLibraryDel"  parameterType="java.util.Map">
     update t_library set is_used = 0
     where reader_id = #{readerId,jdbcType=INTEGER} and story_id = #{storyId,jdbcType=INTEGER}

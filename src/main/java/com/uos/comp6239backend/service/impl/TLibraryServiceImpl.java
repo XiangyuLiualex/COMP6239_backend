@@ -31,19 +31,24 @@ public class TLibraryServiceImpl implements TLibraryService {
     @Override
     public ResponseMap.ResultData tLibraryList(Map<String, Object> values) {
         List<TStorys> tStorysList = tLibraryMapper.tLibraryList(values);
+        log.info("根据作者名模糊查询其所喜欢的作者:"+values);
         return ResponseMap.ok(tStorysList);
     }
 
+//    收藏某个剧本
     @Override
     @Transactional//添加事务
     public ResponseMap.ResultData tLibraryInsert(Map<String, Object> values) {
         tLibraryMapper.tLibraryInsert(values);
+        log.info("收藏某个剧本:"+values);
         return ResponseMap.ok();
     }
 
+//    取消收藏某个剧本
     @Override
     public ResponseMap.ResultData tLibraryDel(Map<String, Object> values) {
         tLibraryMapper.tLibraryDel(values);
+        log.info("取消收藏某个剧本:"+values);
         return ResponseMap.ok();
     }
 }
