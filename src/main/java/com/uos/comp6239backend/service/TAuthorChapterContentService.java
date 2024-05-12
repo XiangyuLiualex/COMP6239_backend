@@ -18,4 +18,5 @@ public interface TAuthorChapterContentService {
     ResponseMap.ResultData tAuthorContentListByChapterId(Map<String, Object> values);
     ResponseMap.ResultData tAuthorOptionListByChapterId(Map<String, Object> values);
     ResponseMap.ResultData tAuthorChapterByStoryIdAndChapterTitle(Map<String, Object> values);
+    ResponseMap.ResultData tRootAuthorStoryByStoryId(Map<String, Object> values);
 }

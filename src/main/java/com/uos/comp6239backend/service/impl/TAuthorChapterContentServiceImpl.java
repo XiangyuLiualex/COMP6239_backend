@@ -34,11 +34,14 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
         TAuthorStorys tAuthorStorys = tAuthorChapterContentMapper.tAuthorStoryByStoryId(values);
         List<TAuthorChapter> tAuthorChapterList = tAuthorChapterContentMapper.tAuthorChapterListByStoryId(values);
         for (TAuthorChapter item : tAuthorChapterList){
-//            HashMap <String,Integer> parm = Map("",)
-//            tAuthorChapterContentMapper.tAuthorContentListByChapterId(Map("chapterId",item.getChapterId()));
+            Map<String, Object> param = new HashMap<>();
+            param.put("chapterId",item.getChapterId());
+            List<TContent> tContentList = tAuthorChapterContentMapper.tAuthorContentListByChapterId(param);
+            List<TOption> tOptionList = tAuthorChapterContentMapper.tAuthorOptionListByChapterId(param);
+            item.setTContentList(tContentList);
+            item.setTOptionList(tOptionList);
         }
-
-
+        tAuthorStorys.setChapterList(tAuthorChapterList);
         log.info("根据故事ID显示本故事的基本信息:"+values);
         return ResponseMap.ok(tAuthorStorys);
     }

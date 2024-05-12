@@ -29,6 +29,18 @@ public class TAuthorChapterContentController {
     private TAuthorChapterContentService tAuthorChapterContentService;
 
     /**
+     *根据故事ID显示该故事下的所有信息
+     * @param values
+     * @return
+     */
+    @PostMapping("/tRootAuthorStoryByStoryId")
+    @ApiOperation(value = "根据故事ID显示该故事下的所有信息", notes = "根据故事ID显示该故事下的所有信息")
+    public ResponseMap.ResultData tRootAuthorStoryByStoryId(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tAuthorChapterContentService.tRootAuthorStoryByStoryId(values);
+    }
+
+
+    /**
      *根据故事ID显示本故事的基本信息
      * @param values
      * @return

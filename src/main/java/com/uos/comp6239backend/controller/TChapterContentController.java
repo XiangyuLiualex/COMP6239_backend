@@ -63,7 +63,7 @@ public class TChapterContentController {
     }
 
     /**
-     *根据作者名模糊查询其所喜欢的作者
+     *根据章节ID显示本章节的所有内容
      * @param values
      * @return
      */
@@ -74,7 +74,7 @@ public class TChapterContentController {
     }
 
     /**
-     *添加喜欢的作者
+     *根据章节ID显示本章节的所有选项
      * @param values
      * @return
      */
@@ -85,7 +85,7 @@ public class TChapterContentController {
     }
 
     /**
-     *根据读者ID和作者ID删除某项喜欢的作者
+     *根据故事ID和章节名模糊查询章节
      * @param values
      * @return
      */
