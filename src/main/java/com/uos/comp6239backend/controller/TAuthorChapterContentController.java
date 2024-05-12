@@ -28,6 +28,18 @@ public class TAuthorChapterContentController {
     @Autowired
     private TAuthorChapterContentService tAuthorChapterContentService;
 
+
+    /**
+     *根据作者ID显示该作者的所有故事
+     * @param values
+     * @return
+     */
+    @PostMapping("/tAuthorStorysByAuthorId")
+    @ApiOperation(value = "根据作者ID显示该作者的所有故事", notes = "根据作者ID显示该作者的所有故事")
+    public ResponseMap.ResultData tAuthorStorysByAuthorId(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tAuthorChapterContentService.tAuthorStorysByAuthorId(values);
+    }
+
     /**
      *根据故事ID显示该故事下的所有信息
      * @param values

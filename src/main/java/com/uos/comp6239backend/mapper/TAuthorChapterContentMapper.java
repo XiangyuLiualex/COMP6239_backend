@@ -17,6 +17,7 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface TAuthorChapterContentMapper {
+    List<Integer> tAuthorStorysByAuthorId(Map<String, Object> values);
     TAuthorStorys tAuthorStoryByStoryId(Map<String, Object> values);
     TAuthorChapter tAuthorChapterByChapterId(Map<String, Object> values);
     List<TAuthorChapter> tAuthorChapterListByStoryId(Map<String, Object> values);

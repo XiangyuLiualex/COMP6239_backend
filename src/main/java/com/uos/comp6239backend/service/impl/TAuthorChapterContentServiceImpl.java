@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,39 @@ import java.util.Map;
 public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentService {
     private final static Logger log = LoggerFactory.getLogger(TAuthorChapterContentServiceImpl.class);
 
+
     @Autowired
     private TAuthorChapterContentMapper tAuthorChapterContentMapper;
+
+
+
+    @Override
+    public ResponseMap.ResultData tAuthorStorysByAuthorId(Map<String, Object> values){
+        List<Integer> storyIdList= tAuthorChapterContentMapper.tAuthorStorysByAuthorId(values);
+        List<TAuthorStorys> storyList = new ArrayList<>();
+        for(Integer storyId: storyIdList){
+            Map<String, Object> param = new HashMap<>();
+            param.put("storyId",storyId);
+            storyList.add(getFullStory(param));
+        }
+        return ResponseMap.ok(storyList);
+    }
+
+    public TAuthorStorys getFullStory(Map<String, Object> values){
+        TAuthorStorys tAuthorStorys = tAuthorChapterContentMapper.tAuthorStoryByStoryId(values);
+        List<TAuthorChapter> tAuthorChapterList = tAuthorChapterContentMapper.tAuthorChapterListByStoryId(values);
+        for (TAuthorChapter item : tAuthorChapterList){
+            Map<String, Object> param = new HashMap<>();
+            param.put("chapterId",item.getChapterId());
+            List<TContent> tContentList = tAuthorChapterContentMapper.tAuthorContentListByChapterId(param);
+            List<TOption> tOptionList = tAuthorChapterContentMapper.tAuthorOptionListByChapterId(param);
+            item.setTContentList(tContentList);
+            item.setTOptionList(tOptionList);
+        }
+        tAuthorStorys.setChapterList(tAuthorChapterList);
+        log.info("根据故事ID显示本故事的基本信息:"+values);
+        return tAuthorStorys;
+    }
 
     @Override
     public ResponseMap.ResultData tRootAuthorStoryByStoryId(Map<String, Object> values) {
