@@ -2,11 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.uos.comp6239backend.mapper.TLibraryMapper">
 
-<!--暂时还有问题-->
+<!--根据读者ID展示图书馆-->
   <select id="tLibraryList" resultType="com.uos.comp6239backend.tdata.entity.TStorys">
-    select ts.*
-    from t_story ts,t_library tl,t_users,tu
-    where  ts.is_used=1 and tl.is_used=1 and tu.is_used=1 and tl.story_id = ts.story_id and tu.user_id = tl.reader_id
+    select ts.*,tas.author_id
+    from t_story ts,t_library tl,t_users tu,t_author_story tas
+    where
+    reader_id = #{readerId,jdbcType=INTEGER} and
+    ts.is_used=1 and tl.is_used=1 and tu.is_used=1 and
+    tl.story_id = ts.story_id and tu.user_id = tl.reader_id and
+    tas.story_id = tl.story_id
+
+  </select>
+
+  <!--根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度-->
+  <select id="tLibraryListReaderStoryForUiState" resultType="com.uos.comp6239backend.tdata.entity.TStorysForUiState">
+    select tu.username,trsh.current_progress,tu.user_id，trsh.story_id
+    from t_users tu,t_reader_story_history trsh
+--      t_reading_path trp,t_reading_path_item trpi,
+    where
+    tu.user_id = #{readerId,jdbcType=INTEGER} and trsh.story_id = #{storyId,jdbcType=INTEGER}
+    and trsh.reader_id = #{readerId,jdbcType=INTEGER} and
+    ts.is_used=1 and trsh.is_used=1
 
   </select>
 

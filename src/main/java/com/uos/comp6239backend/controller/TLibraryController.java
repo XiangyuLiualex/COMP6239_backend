@@ -40,6 +40,18 @@ public class TLibraryController {
         return tLibraryService.tLibraryList(values);
     }
 
+
+    /**
+     *根据读者ID展示图书馆
+     * @param values
+     * @return
+     */
+    @PostMapping("/tLibraryListReaderStoryForUiState")
+    @ApiOperation(value = "根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度", notes = "根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度")
+    public ResponseMap.ResultData tLibraryListReaderStoryForUiState(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tLibraryService.tLibraryListReaderStoryForUiState(values);
+    }
+
     /**
      *根据读者ID展示图书馆
      * @param values

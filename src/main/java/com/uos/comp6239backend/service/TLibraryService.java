@@ -1,6 +1,7 @@
 package com.uos.comp6239backend.service;
 
 import com.uos.comp6239backend.tdata.entity.TStorys;
+import com.uos.comp6239backend.tdata.entity.TStorysForUiState;
 import com.uos.comp6239backend.utils.ResponseMap;
 
 import java.util.List;
@@ -14,6 +15,9 @@ import java.util.Map;
  * @Version 1.0
  */
 public interface TLibraryService {
+
+    ResponseMap.ResultData tLibraryListReaderStoryForUiState(Map<String, Object> values);
+
     ResponseMap.ResultData tLibraryList(Map<String, Object> values);
 
     ResponseMap.ResultData tLibraryInsert(Map<String, Object> values);

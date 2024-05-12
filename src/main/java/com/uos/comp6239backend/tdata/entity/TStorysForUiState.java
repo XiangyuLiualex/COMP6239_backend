@@ -7,23 +7,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.io.Serializable;
-
 /**
- * @title: TStorys
+ * @title: TStorysForUiState
  * @Author Hym
- * @Date: 2024-04-29 10:41
+ * @Date: 2024-05-12 5:04
  * @Description:
  * @Version 1.0
  */
 @Data
-@ApiModel(description = "剧本实体")
+@ApiModel(description = "剧本实体剩下的属性")
 @Getter
 @Setter
 @ToString
-public class TStorys  implements Serializable {
-    private static final long serialVersionUID = 239859184047767915L;
-
+public class TStorysForUiState {
     /**
      * 剧本ID
      */
@@ -56,5 +52,25 @@ public class TStorys  implements Serializable {
      */
     @ApiModelProperty(value = "剧本作者ID")
     private Integer authorId;
+
+    //以上是新加的
+
+    /**
+     * 剧本作者
+     */
+    @ApiModelProperty(value = "剧本作者")
+    private String username;
+
+    /**
+     * 剧本阅读进度
+     */
+    @ApiModelProperty(value = "剧本阅读进度")
+    private Integer currentProgress;
+    /**
+     * 剧本当前被阅读到那个章节
+     */
+//    @ApiModelProperty(value = "剧本当前被阅读到那个章节")
+//    private String currentChapterName;
+
 
 }

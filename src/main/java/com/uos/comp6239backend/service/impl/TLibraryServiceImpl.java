@@ -4,6 +4,7 @@ import com.uos.comp6239backend.mapper.TLibraryMapper;
 import com.uos.comp6239backend.mapper.TUsersMapper;
 import com.uos.comp6239backend.service.TLibraryService;
 import com.uos.comp6239backend.tdata.entity.TStorys;
+import com.uos.comp6239backend.tdata.entity.TStorysForUiState;
 import com.uos.comp6239backend.utils.ResponseMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +29,19 @@ public class TLibraryServiceImpl implements TLibraryService {
     @Autowired
     private TLibraryMapper tLibraryMapper;
 
+//    根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度
+    @Override
+    public ResponseMap.ResultData tLibraryListReaderStoryForUiState(Map<String, Object> values) {
+        List<TStorysForUiState> tStorysForUiStates = tLibraryMapper.tLibraryListReaderStoryForUiState(values);
+        log.info("根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度:"+values);
+        return ResponseMap.ok(tStorysForUiStates);
+    }
+
+    //    根据读者ID展示图书馆
     @Override
     public ResponseMap.ResultData tLibraryList(Map<String, Object> values) {
         List<TStorys> tStorysList = tLibraryMapper.tLibraryList(values);
-        log.info("根据作者名模糊查询其所喜欢的作者:"+values);
+        log.info("根据读者ID展示图书馆:"+values);
         return ResponseMap.ok(tStorysList);
     }
 
