@@ -10,7 +10,7 @@
 
   <!--  根据章节ID显示本章节的基本信息 -->
   <select id="tChapterByChapterId" resultType="com.uos.comp6239backend.tdata.entity.TChapter">
-    select ts.* from t_chapter ts where is_used=1 and chapter_id=#{chpterId}
+    select ts.* from t_chapter ts where is_used=1 and chapter_id=#{chapterId}
   </select>
 
 <!--  根据故事ID显示本故事的所有章节 -->
