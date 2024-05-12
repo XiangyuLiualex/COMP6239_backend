@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,6 +96,12 @@ public class THistoryServiceImpl implements THistoryService {
     public ResponseMap.ResultData getPathsByStoryId(Map<String, Object> values) {
         List<ReadingPath> paths = tHistoryMapper.getPathsByStoryId(values);
         log.info("根据故事ID获取所有相关的阅读路径: " + values);
+        for(ReadingPath item : paths){
+            Map<String, Object> param = new HashMap<>();
+            param.put("tReadingPathId",item.getReadingPathId());
+            List<ReadingPathItem> readingPathItemList = tHistoryMapper.getPathItemsByTReadingPathId(param);
+            item.setReadingPathItemList(readingPathItemList);
+        }
         return ResponseMap.ok(paths);
     }
 

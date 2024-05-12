@@ -81,6 +81,7 @@ public class THistoryController {
         return tHistoryService.getReadingPathById(values);
     }
 
+//    重要，测试这个api
     @PostMapping("/getPathsByStoryId")
     @ApiOperation(value = "根据故事ID获取所有相关的阅读路径", notes = "根据故事ID获取所有相关的阅读路径")
     public ResponseMap.ResultData getPathsByStoryId(@RequestBody Map<String, Object> values, HttpServletRequest request) {

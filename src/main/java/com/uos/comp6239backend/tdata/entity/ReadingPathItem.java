@@ -31,6 +31,9 @@ public class ReadingPathItem implements Serializable {
     @ApiModelProperty(value = "章节ID")
     private Integer chapterId;
 
+    @ApiModelProperty(value = "章节Name")
+    private String chapterName;
+
     @ApiModelProperty(value = "阅读次数")
     private Date readingTimes;
 
@@ -42,4 +45,7 @@ public class ReadingPathItem implements Serializable {
 
     @ApiModelProperty(value = "顺序")
     private Integer order;
+
+    @ApiModelProperty(value = "所属章节路径记录头节点ID")
+    private Integer tReadingPathId;
 }

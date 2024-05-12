@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @title: ReadingPath
@@ -42,4 +43,7 @@ public class ReadingPath implements Serializable {
 
     @ApiModelProperty(value = "读者ID")
     private Integer readerId;
+
+    @ApiModelProperty(value = "阅读路径项列表")
+    private List<ReadingPathItem> readingPathItemList;
 }

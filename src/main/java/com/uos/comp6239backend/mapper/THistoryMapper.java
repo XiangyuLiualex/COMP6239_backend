@@ -61,5 +61,7 @@ public interface THistoryMapper {
 //    根据路径项ID获取详情
     ReadingPathItem getPathItemById(Map<String, Object> values);
 
+    //    根据头节点ID获取所有路径项
+    List<ReadingPathItem> getPathItemsByTReadingPathId(Map<String, Object> values);
 
 }
