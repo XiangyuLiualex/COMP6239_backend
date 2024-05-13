@@ -2,21 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.uos.comp6239backend.mapper.TAuthorChapterContentMapper">
 
+
+
+  <!--  delete contentList by chapterId-->
+  <delete id="deleteContentByChapterId">
+    DELETE FROM TContent
+    WHERE chapter_id = #{chapterId}
+  </delete>
+
+
+
+
 <!--  insert contentList-->
-  <insert id="insertAuthorContentList" parameterType="java.util.List">
-    INSERT INTO TContent
-    (<trim>...</trim>)
+  <insert id="insertAuthorContentList">
+    INSERT INTO t_content
+    ( `chapter_id`, `order`, `content_type`, `content_data`, `is_used`, `content_description`, `content_title`, `music`)
     VALUES
-    <foreach collection="contentList" item="content" separator=",">
+    <foreach collection="contentList" item="content" index="index" separator=",">
       (
-      #{content.chapterId},
-      #{content.order},
-      #{content.contentType},
-      #{content.contentData},
-      #{content.isUsed},
-      #{content.contentDescription},
-      #{content.contentTitle},
-      #{content.music}
+      #{content.chapterId, jdbcType=INTEGER},
+      #{content.order, jdbcType=INTEGER},
+      #{content.contentType, jdbcType=INTEGER},
+      #{content.contentData, jdbcType=VARCHAR},
+      #{content.isUsed, jdbcType=INTEGER},
+      #{content.contentDescription, jdbcType=VARCHAR},
+      #{content.contentTitle, jdbcType=VARCHAR},
+      #{content.music, jdbcType=VARCHAR}
       )
     </foreach>
   </insert>
