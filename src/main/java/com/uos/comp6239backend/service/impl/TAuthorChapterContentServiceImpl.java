@@ -31,8 +31,6 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
     @Autowired
     private TAuthorChapterContentMapper tAuthorChapterContentMapper;
 
-
-
     public ResponseMap.ResultData tAuthorUpdateStory(TAuthorStorys values){
         TStorys newStory=new TStorys();
         newStory.setStoryName(values.getStoryName());
@@ -47,9 +45,14 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
 
         }else{
 //            Insert story
+//            Insert type category
+//            Insert author_story
         }
 
-//        update TStory to DB
+
+
+
+
         List<TChapter> insertChapterList=new ArrayList<>();
         List<TChapter> updateChapterList=new ArrayList<>();
         List<TContent> insertContentList=new ArrayList<>();
@@ -68,6 +71,8 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
             }else{
                 insertChapterList.add(newChapter);
             }
+
+
             int i=0;
             for(TContent content: chapter.getTContentList()){
                 TContent newContent=new TContent();
@@ -98,6 +103,12 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
 
 
         return ResponseMap.ok();
+    }
+
+    @Override
+    public ResponseMap.ResultData insertAuthorContentList(List<TContent> contentList){
+        int insertLines=tAuthorChapterContentMapper.insertAuthorContentList(contentList);
+        return ResponseMap.ok(insertLines);
     }
 
 
