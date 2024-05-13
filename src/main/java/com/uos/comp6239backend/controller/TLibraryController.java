@@ -41,6 +41,17 @@ public class TLibraryController {
     }
 
     /**
+     *首页展示所有的书,返回TStoryDetail:
+     * @param values
+     * @return
+     */
+    @PostMapping("/selectAllStoryDetail")
+    @ApiOperation(value = "首页展示所有的书,返回TStoryDetail:", notes = "首页展示所有的书,返回TStoryDetail:")
+    public ResponseMap.ResultData selectAllStoryDetail(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tLibraryService.selectAllStoryDetail(values);
+    }
+
+    /**
      *根据读者ID展示其收藏的所有的书和剧本作者，阅读进度,返回TStoryDetail
      * @param values
      * @return

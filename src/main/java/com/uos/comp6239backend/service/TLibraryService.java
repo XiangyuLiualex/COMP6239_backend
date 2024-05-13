@@ -17,6 +17,8 @@ import java.util.Map;
 public interface TLibraryService {
     ResponseMap.ResultData selectReaderStoryDetail(Map<String, Object> values);
 
+    ResponseMap.ResultData selectAllStoryDetail(Map<String, Object> values);
+
     ResponseMap.ResultData tLibraryListReaderStoryForUiState(Map<String, Object> values);
 
     ResponseMap.ResultData tLibraryList(Map<String, Object> values);

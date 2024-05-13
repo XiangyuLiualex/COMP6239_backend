@@ -26,6 +26,14 @@
         AND rsh.is_used = 1
 </select>
 
+<!--    主页查询所有故事的基本信息-->
+    <select id="selectAllStoryDetail" parameterType="java.util.Map" resultType="com.uos.comp6239backend.tdata.entity.TStoryDetail">
+    SELECT DISTINCT
+    s.*
+    FROM
+    t_story s
+    where is_used = 1
+    </select>
 
 
   <!--根据读者ID展示图书馆-->

@@ -38,6 +38,14 @@ public class TLibraryServiceImpl implements TLibraryService {
         return ResponseMap.ok(tStoryDetails);
     }
 
+    //首页展示所有的书,返回TStoryDetail:
+    @Override
+    public ResponseMap.ResultData selectAllStoryDetail(Map<String, Object> values) {
+        List<TStoryDetail> tStoryDetails = tLibraryMapper.selectAllStoryDetail(values);
+        log.info("首页展示所有的书,返回TStoryDetail:"+values);
+        return ResponseMap.ok(tStoryDetails);
+    }
+
     //    根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度
     @Override
     public ResponseMap.ResultData tLibraryListReaderStoryForUiState(Map<String, Object> values) {

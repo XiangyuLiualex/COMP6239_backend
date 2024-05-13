@@ -21,6 +21,8 @@ import java.util.Map;
 public interface TLibraryMapper {
     List<TStoryDetail> selectReaderStoryDetail(Map<String, Object> values);
 
+    List<TStoryDetail> selectAllStoryDetail(Map<String, Object> values);
+
     List<TStorysForUiState> tLibraryListReaderStoryForUiState(Map<String, Object> values);
 
     List<TStorys> tLibraryList(Map<String, Object> values);
