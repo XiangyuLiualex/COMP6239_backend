@@ -48,6 +48,9 @@ public interface THistoryMapper {
 //    根据故事ID获取所有相关的阅读路径。
     List<ReadingPath> getPathsByStoryId(Map<String, Object> values);
 
+    //    根据故事ID和读者ID查找所有相关的阅读路径,但ItemList部分为空 重要
+    List<ReadingPath> findHistoryByStoryIdAndReaderId(Map<String, Object> values);
+
     //以下是item表
 //    添加新的阅读路径项。
     void insertPathItem(Map<String, Object> values);

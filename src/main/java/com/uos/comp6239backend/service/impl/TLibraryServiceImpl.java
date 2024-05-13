@@ -1,8 +1,10 @@
 package com.uos.comp6239backend.service.impl;
 
+import com.uos.comp6239backend.mapper.THistoryMapper;
 import com.uos.comp6239backend.mapper.TLibraryMapper;
 import com.uos.comp6239backend.mapper.TUsersMapper;
 import com.uos.comp6239backend.service.TLibraryService;
+import com.uos.comp6239backend.tdata.entity.ReadingPath;
 import com.uos.comp6239backend.tdata.entity.TStoryDetail;
 import com.uos.comp6239backend.tdata.entity.TStorys;
 import com.uos.comp6239backend.tdata.entity.TStorysForUiState;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +32,9 @@ public class TLibraryServiceImpl implements TLibraryService {
 
     @Autowired
     private TLibraryMapper tLibraryMapper;
+
+    @Autowired
+    private THistoryMapper tHistoryMapper;
 
     //根据读者ID展示其收藏的所有的书和剧本作者，阅读进度,返回TStoryDetail
     @Override
@@ -50,6 +56,45 @@ public class TLibraryServiceImpl implements TLibraryService {
     @Override
     public ResponseMap.ResultData tLibraryListReaderStoryForUiState(Map<String, Object> values) {
         List<TStorysForUiState> tStorysForUiStates = tLibraryMapper.tLibraryListReaderStoryForUiState(values);
+        for(TStorysForUiState item : tStorysForUiStates){//这里的一个item对应一个story
+            Map selectParam = new HashMap<>();
+            selectParam.put("authorId",item.getAuthorId());
+            selectParam.put("readerId",values.get("readerId"));
+            selectParam.put("storyId",item.getStoryId());
+            item.setAuthor(tLibraryMapper.tAuthorNameByAuthorId(selectParam));//设置作者名
+            Integer currentProgress = tLibraryMapper.tCurrentProgressByReaderIdAndStoryId(selectParam);
+            //获取到了剧本当前最新的章节历史记录头节点列表，但是item的List为空,readingPathList的长度就是头结点的个数
+            List<ReadingPath> readingPathList = tHistoryMapper.findHistoryByStoryIdAndReaderId(selectParam);
+            for(ReadingPath readingPathItem : readingPathList){
+                Map selectParamForReadingPathItem = new HashMap();
+                selectParamForReadingPathItem.put("tReadingPathId",readingPathItem.getReadingPathId());
+                //获取到了剧本当前最新的章节历史记录头节点列表后，补充上item的List
+                readingPathItem.setReadingPathItemList(tHistoryMapper.getPathItemsByTReadingPathId(selectParamForReadingPathItem));
+            }
+            item.setReadingPathList(readingPathList);
+            item.setCurrentProgress(currentProgress);
+            switch(currentProgress){
+                case  0 :
+                    item.setCurrentProgressText("unread");
+                    break;
+                case  1 :
+                    item.setCurrentProgressText("reading");
+                    break;
+                case  2 :
+                    item.setCurrentProgressText("Have readed");
+                    break;
+            }
+            int firstIndex = item.getReadingPathList().size() - 1;
+            if(firstIndex>=0) {
+                int secondIndex = item.getReadingPathList().get(firstIndex).getReadingPathItemList().size()-1;
+                if(secondIndex>=0){
+                    item.setCurrentChapterId(item.getReadingPathList().get(firstIndex).getReadingPathItemList().
+                            get(secondIndex).getChapterId());//取最后一个元素
+                    item.setCurrentChapterName(item.getReadingPathList().get(firstIndex).getReadingPathItemList().
+                            get(secondIndex).getChapterName());
+                }
+            }
+        }
         log.info("根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度:"+values);
         return ResponseMap.ok(tStorysForUiStates);
     }
@@ -77,5 +122,56 @@ public class TLibraryServiceImpl implements TLibraryService {
         tLibraryMapper.tLibraryDel(values);
         log.info("取消收藏某个剧本:"+values);
         return ResponseMap.ok();
+    }
+
+    /**
+     *根据null展示剧本作者，阅读进度等等所有的东西，十分重要
+     * @param values
+     * @return
+     */
+    @Override
+    public ResponseMap.ResultData tLibraryListReaderStoryForUiStateByNull(Map<String, Object> values) {
+        List<TStorysForUiState> tStorysForUiStates = tLibraryMapper.tLibraryListReaderStoryForUiStateByNull(values);
+        for(TStorysForUiState item : tStorysForUiStates){//这里的一个item对应一个story
+            Map selectParam = new HashMap<>();
+            selectParam.put("authorId",item.getAuthorId());
+            selectParam.put("readerId",values.get("readerId"));
+            selectParam.put("storyId",item.getStoryId());
+            item.setAuthor(tLibraryMapper.tAuthorNameByAuthorId(selectParam));//设置作者名
+//            Integer currentProgress = tLibraryMapper.tCurrentProgressByReaderIdAndStoryId(selectParam);首页不需要看进度
+            //获取到了剧本当前最新的章节历史记录头节点列表，但是item的List为空,readingPathList的长度就是头结点的个数
+//            List<ReadingPath> readingPathList = tHistoryMapper.findHistoryByStoryIdAndReaderId(selectParam);首页也没有历史记录
+//            for(ReadingPath readingPathItem : readingPathList){
+//                Map selectParamForReadingPathItem = new HashMap();
+//                selectParamForReadingPathItem.put("tReadingPathId",readingPathItem.getReadingPathId());
+//                //获取到了剧本当前最新的章节历史记录头节点列表后，补充上item的List
+//                readingPathItem.setReadingPathItemList(tHistoryMapper.getPathItemsByTReadingPathId(selectParamForReadingPathItem));
+//            }
+//            item.setReadingPathList(readingPathList);
+//            item.setCurrentProgress(currentProgress);
+//            switch(currentProgress){
+//                case  0 :
+//                    item.setCurrentProgressText("unread");
+//                    break;
+//                case  1 :
+//                    item.setCurrentProgressText("reading");
+//                    break;
+//                case  2 :
+//                    item.setCurrentProgressText("Have readed");
+//                    break;
+//            }
+//            int firstIndex = item.getReadingPathList().size() - 1;
+//            if(firstIndex>=0) {
+//                int secondIndex = item.getReadingPathList().get(firstIndex).getReadingPathItemList().size()-1;
+//                if(secondIndex>=0){
+//                    item.setCurrentChapterId(item.getReadingPathList().get(firstIndex).getReadingPathItemList().
+//                            get(secondIndex).getChapterId());//取最后一个元素
+//                    item.setCurrentChapterName(item.getReadingPathList().get(firstIndex).getReadingPathItemList().
+//                            get(secondIndex).getChapterName());
+//                }
+//            }
+        }
+        log.info("根据null展示剧本作者，阅读进度:"+values);
+        return ResponseMap.ok(tStorysForUiStates);
     }
 }

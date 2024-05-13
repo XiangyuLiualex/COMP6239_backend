@@ -28,6 +28,8 @@
         WHERE story_id = #{storyId} AND is_used=1
     </select>
 
+
+
 <!--    头节点表-->
 
     <!-- 创建新的阅读路径 -->
@@ -53,6 +55,12 @@
     <select id="getPathsByStoryId" parameterType="java.util.Map" resultType="com.uos.comp6239backend.tdata.entity.ReadingPath">
         SELECT * FROM t_reading_path
         WHERE story_id = #{storyId}  AND reader_id = #{readerId}
+    </select>
+
+    <!-- 根据故事ID和读者ID查找所有相关的阅读路径,但ItemList部分为空 重要 -->
+    <select id="findHistoryByStoryIdAndReaderId" parameterType="java.util.Map" resultType="com.uos.comp6239backend.tdata.entity.ReadingPath">
+        SELECT * FROM t_reading_path
+        WHERE story_id = #{storyId} and reader_id = #{readerId}
     </select>
 
 <!--    item表-->

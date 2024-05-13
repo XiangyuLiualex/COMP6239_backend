@@ -49,14 +49,36 @@
 
   <!--根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度-->
   <select id="tLibraryListReaderStoryForUiState" resultType="com.uos.comp6239backend.tdata.entity.TStorysForUiState">
-    select tu.username,trsh.current_progress,tu.user_id，trsh.story_id
-    from t_users tu,t_reader_story_history trsh
---      t_reading_path trp,t_reading_path_item trpi,
+    select ts.*
+    from t_story ts,t_library tl,t_users tu
     where
-    tu.user_id = #{readerId,jdbcType=INTEGER} and trsh.story_id = #{storyId,jdbcType=INTEGER}
-    and trsh.reader_id = #{readerId,jdbcType=INTEGER} and
-    ts.is_used=1 and trsh.is_used=1
+    reader_id = #{readerId,jdbcType=INTEGER} and
+    ts.is_used=1 and tl.is_used=1 and tu.is_used=1 and
+    tl.story_id = ts.story_id and tu.user_id = tl.reader_id
+  </select>
 
+    <!--根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度-->
+    <select id="tLibraryListReaderStoryForUiStateByNull" resultType="com.uos.comp6239backend.tdata.entity.TStorysForUiState">
+    select ts.*
+    from t_story ts
+    where
+    ts.is_used=1
+  </select>
+
+    <!--根据剧本作者ID展示剧本作者-->
+  <select id="tAuthorNameByAuthorId" resultType="java.lang.String">
+    select tu.username as author
+    from t_users tu
+    where
+    user_id = #{authorId,jdbcType=INTEGER} and tu.is_used=1
+  </select>
+
+    <!--根据读者ID和故事ID展示阅读进度文本-->
+  <select id="tCurrentProgressByReaderIdAndStoryId" resultType="java.lang.Integer">
+    select trsh.current_progress
+    from t_reader_story_history trsh
+    where
+    reader_id = #{readerId,jdbcType=INTEGER} and trsh.is_used=1 and story_id = #{storyId,jdbcType=INTEGER}
   </select>
 
 <!--  收藏某个剧本-->

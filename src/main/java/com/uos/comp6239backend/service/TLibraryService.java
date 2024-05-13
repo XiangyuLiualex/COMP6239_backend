@@ -26,4 +26,6 @@ public interface TLibraryService {
     ResponseMap.ResultData tLibraryInsert(Map<String, Object> values);
 
     ResponseMap.ResultData tLibraryDel(Map<String, Object> values);
+
+    ResponseMap.ResultData tLibraryListReaderStoryForUiStateByNull(Map<String, Object> values);
 }

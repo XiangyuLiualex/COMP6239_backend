@@ -25,6 +25,12 @@ public interface TLibraryMapper {
 
     List<TStorysForUiState> tLibraryListReaderStoryForUiState(Map<String, Object> values);
 
+    List<TStorysForUiState> tLibraryListReaderStoryForUiStateByNull(Map<String, Object> values);
+
+    String tAuthorNameByAuthorId(Map<String, Object> values);
+
+    Integer tCurrentProgressByReaderIdAndStoryId(Map<String, Object> values);
+
     List<TStorys> tLibraryList(Map<String, Object> values);
 
     void tLibraryInsert(Map<String, Object> values);

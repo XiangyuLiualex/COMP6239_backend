@@ -63,14 +63,25 @@ public class TLibraryController {
     }
 
     /**
-     *根据读者ID展示图书馆
+     *根据读者ID展示剧本作者，阅读进度等等所有的东西，十分重要
      * @param values
      * @return
      */
     @PostMapping("/tLibraryListReaderStoryForUiState")
-    @ApiOperation(value = "根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度", notes = "根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度")
+    @ApiOperation(value = "根据读者ID展示剧本作者，阅读进度等等所有的东西，十分重要", notes = "根据读者ID展示剧本作者，阅读进度等等所有的东西，十分重要")
     public ResponseMap.ResultData tLibraryListReaderStoryForUiState(@RequestBody Map<String,Object> values, HttpServletRequest request){
         return tLibraryService.tLibraryListReaderStoryForUiState(values);
+    }
+
+    /**
+     *根据null展示剧本作者，阅读进度等等所有的东西，十分重要
+     * @param values
+     * @return
+     */
+    @PostMapping("/tLibraryListReaderStoryForUiStateByNull")
+    @ApiOperation(value = "根据读者ID展示剧本作者，阅读进度等等所有的东西，十分重要", notes = "根据读者ID展示剧本作者，阅读进度等等所有的东西，十分重要")
+    public ResponseMap.ResultData tLibraryListReaderStoryForUiStateByNull(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tLibraryService.tLibraryListReaderStoryForUiStateByNull(values);
     }
 
     /**
