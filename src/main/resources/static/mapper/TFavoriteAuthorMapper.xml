@@ -17,7 +17,7 @@
     from t_author_reader tar,t_users tu
     where  tar.is_used=1 and tu.is_used=1 and tar.reader_id=#{readerId}
     <if test="AuthorName != null and AuthorName != ''">
-        and tu.username like CONCAT('%',#{AuthorName},'%')
+        and tu.username like CONCAT('%',#{AuthorName},'%') or tu.email like CONCAT('%',#{AuthorName},'%')
         and tu.user_type = 2
     </if>
   </select>
