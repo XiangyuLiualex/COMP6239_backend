@@ -2,6 +2,7 @@ package com.uos.comp6239backend.controller;
 
 import com.uos.comp6239backend.service.TAuthorChapterContentService;
 import com.uos.comp6239backend.service.TChapterContentService;
+import com.uos.comp6239backend.tdata.entity.TContent;
 import com.uos.comp6239backend.utils.ResponseMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @title: TChapterContentController
- * @Author Hym
+ * @Author Xiangyu
  * @Date: 2024-05-01 18:40
  * @Description:
  * @Version 1.0
@@ -27,6 +29,17 @@ import java.util.Map;
 public class TAuthorChapterContentController {
     @Autowired
     private TAuthorChapterContentService tAuthorChapterContentService;
+
+    /**
+     *根据作者ID显示该作者的所有故事
+     * @param contentList
+     * @return
+     */
+    @PostMapping("/insertAuthorContentList")
+    @ApiOperation(value = "根据作者ID显示该作者的所有故事", notes = "根据作者ID显示该作者的所有故事")
+    public ResponseMap.ResultData insertAuthorContentList(@RequestBody List<TContent> contentList, HttpServletRequest request){
+        return tAuthorChapterContentService.insertAuthorContentList(contentList);
+    }
 
 
     /**

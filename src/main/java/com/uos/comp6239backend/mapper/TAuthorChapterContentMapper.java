@@ -2,6 +2,7 @@ package com.uos.comp6239backend.mapper;
 
 import com.uos.comp6239backend.tdata.entity.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface TAuthorChapterContentMapper {
+    int insertAuthorContentList( @Param("contentList")List<TContent> contentList);
     List<Integer> tAuthorStorysByAuthorId(Map<String, Object> values);
     TAuthorStorys tAuthorStoryByStoryId(Map<String, Object> values);
     TAuthorChapter tAuthorChapterByChapterId(Map<String, Object> values);

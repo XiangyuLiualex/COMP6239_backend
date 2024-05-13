@@ -1,8 +1,10 @@
 package com.uos.comp6239backend.service;
 
 import com.uos.comp6239backend.tdata.entity.TAuthorStorys;
+import com.uos.comp6239backend.tdata.entity.TContent;
 import com.uos.comp6239backend.utils.ResponseMap;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +16,7 @@ import java.util.Map;
  */
 public interface TAuthorChapterContentService {
 
+    ResponseMap.ResultData insertAuthorContentList(List<TContent> contentList);
     ResponseMap.ResultData tAuthorUpdateStory(TAuthorStorys values);
     ResponseMap.ResultData tAuthorStorysByAuthorId(Map<String, Object> values);
     ResponseMap.ResultData tAuthorStoryByStoryId(Map<String, Object> values);
