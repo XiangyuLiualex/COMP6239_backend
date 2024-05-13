@@ -50,9 +50,6 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
         }
 
 
-
-
-
         List<TChapter> insertChapterList=new ArrayList<>();
         List<TChapter> updateChapterList=new ArrayList<>();
         List<TContent> insertContentList=new ArrayList<>();
@@ -66,6 +63,7 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
             if(chapter.getChapterId()>0) {
                 newChapter.setChapterId(chapter.getChapterId());
                 updateChapterList.add(newChapter);
+                //        Update chapter
 
                 //删除此chapter.getChapterId()对应的所有content和option
             }else{
@@ -96,7 +94,7 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
                 i++;
             }
         }
-//        Update chapterList
+
 //        Insert chapterlist
 //        Insert optionList
 //        insert contentList
@@ -104,6 +102,46 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
 
 
         return ResponseMap.ok();
+    }
+
+    @Override
+    public ResponseMap.ResultData deleteAuthorOptionByChapterId( Integer chapterId){
+        tAuthorChapterContentMapper.deleteAuthorOptionByChapterId(chapterId);
+        return ResponseMap.ok();
+    }
+
+    @Override
+    public ResponseMap.ResultData deleteAuthorContentByChapterId( Integer chapterId){
+        tAuthorChapterContentMapper.deleteAuthorContentByChapterId(chapterId);
+        return ResponseMap.ok();
+    }
+    @Override
+    public ResponseMap.ResultData updateAuthorChapter(TChapter chapter){
+        int insertLines=tAuthorChapterContentMapper.updateAuthorChapter(chapter);
+        return ResponseMap.ok(insertLines);
+    }
+
+    @Override
+    public ResponseMap.ResultData updateAuthorStory(TStorys story){
+        int insertLines=tAuthorChapterContentMapper.updateAuthorStory(story);
+        return ResponseMap.ok(insertLines>0);
+    }
+
+    @Override
+    public ResponseMap.ResultData insertAuthorStory(TStorys story){
+        int insertLines=tAuthorChapterContentMapper.insertAuthorStory(story);
+        return ResponseMap.ok(insertLines>0);
+    }
+    @Override
+    public ResponseMap.ResultData insertAuthorChapterList(List<TChapter> chapterList){
+        int insertLines=tAuthorChapterContentMapper.insertAuthorChapterList(chapterList);
+        return ResponseMap.ok(insertLines);
+    }
+
+    @Override
+    public ResponseMap.ResultData insertAuthorOptionList(List<TOption> optionList){
+        int insertLines=tAuthorChapterContentMapper.insertAuthorOptionList(optionList);
+        return ResponseMap.ok(insertLines);
     }
 
     @Override

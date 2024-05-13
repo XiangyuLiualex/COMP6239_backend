@@ -2,16 +2,104 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.uos.comp6239backend.mapper.TAuthorChapterContentMapper">
 
+  <!-- Update a story in the database -->
+  <update id="updateAuthorStory" parameterType="com.uos.comp6239backend.tdata.entity.TStorys">
+    UPDATE t_story
+    SET
+      story_name = #{story.storyName},
+      story_description = #{story.storyDescription},
+      story_trends = #{story.storyTrends},
+      story_cover_url = #{story.storyCoverUrl},
+      author_id = #{story.authorId},
+      is_used = #{story.isUsed}
+    WHERE story_id = #{story.storyId}
+  </update>
+
+  <!-- Insert Story -->
+  <insert id="insertAuthorStory" parameterType="com.uos.comp6239backend.tdata.entity.TStorys">
+    INSERT INTO t_story (
+      story_id,
+      story_name,
+      story_description,
+      story_trends,
+      story_cover_url,
+      author_id,
+      is_used
+    ) VALUES (
+     #{story.storyId},
+     #{story.storyName},
+     #{story.storyDescription},
+     #{story.storyTrends},
+     #{story.storyCoverUrl},
+     #{story.authorId},
+     #{story.isUsed}
+             )
+  </insert>
 
 
-  <!--  delete contentList by chapterId-->
-  <delete id="deleteContentByChapterId">
-    DELETE FROM TContent
+
+<!--  updateChapter-->
+  <update id="updateAuthorChapter">
+    UPDATE t_chapter
+    SET
+      chapter_title = #{chapter.chapterTitle},
+      chapter_number = #{chapter.chapterNumber},
+      story_id = #{chapter.storyId},
+      notes = #{chapter.notes},
+      music = #{chapter.music},
+      is_end = #{chapter.isEnd},
+      is_used = #{chapter.isUsed}
+    WHERE chapter_id = #{chapter.chapterId}
+  </update>
+
+
+
+
+  <!--  insert ChapterList-->
+  <insert id="insertAuthorChapterList" parameterType="java.util.List">
+    INSERT INTO t_chapter
+    (chapter_title, chapter_number, story_id, notes, music, is_end, is_used)
+    VALUES
+    <foreach collection="chapterList" item="item" index="index" separator=",">
+      (
+      #{item.chapterTitle, jdbcType=VARCHAR},
+      #{item.chapterNumber, jdbcType=INTEGER},
+      #{item.storyId, jdbcType=INTEGER},
+      #{item.notes, jdbcType=VARCHAR},
+      #{item.music, jdbcType=VARCHAR},
+      #{item.isEnd, jdbcType=INTEGER},
+      #{item.isUsed, jdbcType=INTEGER}
+      )
+    </foreach>
+  </insert>
+
+  <!--  delete optionList by chapterId-->
+  <delete id="deleteAuthorOptionByChapterId">
+    DELETE FROM t_option
     WHERE chapter_id = #{chapterId}
   </delete>
 
+  <!--  delete contentList by chapterId-->
+  <delete id="deleteAuthorContentByChapterId">
+    DELETE FROM t_content
+    WHERE chapter_id = #{chapterId}
+  </delete>
 
-
+  <!--  insert OptionList-->
+  <insert id="insertAuthorOptionList">
+    INSERT INTO t_option (option_name, chapter_id, option_description, next_chapter_id, is_used, `order`)
+    VALUES
+    <foreach collection="optionList" item="option" separator=",">
+      (
+      #{option.optionName},
+      #{option.chapterId},
+      #{option.optionDescription},
+      #{option.nextChapterId},
+      #{option.isUsed},
+      #{option.order}
+      )
+    </foreach>
+  </insert>
 
 <!--  insert contentList-->
   <insert id="insertAuthorContentList">

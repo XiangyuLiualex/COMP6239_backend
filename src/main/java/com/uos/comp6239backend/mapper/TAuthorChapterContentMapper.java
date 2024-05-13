@@ -18,6 +18,14 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface TAuthorChapterContentMapper {
+
+    void deleteAuthorOptionByChapterId(@Param("chapterId") Integer chapterId);
+    void deleteAuthorContentByChapterId(@Param("chapterId") Integer chapterId);
+    int updateAuthorChapter( @Param("chapter")TChapter chapter);
+    int updateAuthorStory( @Param("story")TStorys story);
+    int insertAuthorStory( @Param("story")TStorys story);
+    int insertAuthorChapterList( @Param("chapterList")List<TChapter> chapterList);
+    int insertAuthorOptionList( @Param("optionList")List<TOption> optionList);
     int insertAuthorContentList( @Param("contentList")List<TContent> contentList);
     List<Integer> tAuthorStorysByAuthorId(Map<String, Object> values);
     TAuthorStorys tAuthorStoryByStoryId(Map<String, Object> values);
