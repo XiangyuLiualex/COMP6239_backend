@@ -70,9 +70,8 @@ public class THistoryServiceImpl implements THistoryService {
     @Transactional
     @Override
     public ResponseMap.ResultData createReadingPath(Map<String, Object> values) {
-        tHistoryMapper.createReadingPath(values);
         log.info("创建新的阅读路径: " + values);
-        return ResponseMap.ok();
+        return ResponseMap.ok(tHistoryMapper.createReadingPath(values));
     }
 
     @Transactional
@@ -108,9 +107,8 @@ public class THistoryServiceImpl implements THistoryService {
     @Transactional
     @Override
     public ResponseMap.ResultData insertPathItem(Map<String, Object> values) {
-        tHistoryMapper.insertPathItem(values);
         log.info("添加新的阅读路径项: " + values);
-        return ResponseMap.ok();
+        return ResponseMap.ok(tHistoryMapper.insertPathItem(values));
     }
 
     @Transactional

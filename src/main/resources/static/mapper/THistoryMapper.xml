@@ -33,7 +33,7 @@
 <!--    头节点表-->
 
     <!-- 创建新的阅读路径 -->
-    <insert id="createReadingPath" parameterType="java.util.Map">
+    <insert id="createReadingPath"  useGeneratedKeys="true" keyProperty="reading_path_id" parameterType="java.util.Map">
         INSERT INTO t_reading_path (start_time, update_time, story_id, start_reading_path_item_id, reader_id)
         VALUES (#{startTime}, #{updateTime}, #{storyId}, #{startReadingPathItemId}, #{readerId});
     </insert>
@@ -54,7 +54,7 @@
     <!-- 根据故事ID获取所有相关的阅读路径 重要-->
     <select id="getPathsByStoryId" parameterType="java.util.Map" resultType="com.uos.comp6239backend.tdata.entity.ReadingPath">
         SELECT * FROM t_reading_path
-        WHERE story_id = #{storyId}  AND reader_id = #{readerId}
+        WHERE story_id = #{storyId}  AND reader_id = #{readerId}  ORDER BY reading_time ASC
     </select>
 
     <!-- 根据故事ID和读者ID查找所有相关的阅读路径,但ItemList部分为空 重要 -->
@@ -65,15 +65,15 @@
 
 <!--    item表-->
     <!-- 添加新的阅读路径项 -->
-    <insert id="insertPathItem" parameterType="java.util.Map">
-        INSERT INTO t_reading_path_item (chapter_id, reading_times, next_reading_path_id, reading_time, order)
+    <insert id="insertPathItem" useGeneratedKeys="true" keyProperty="reading_path_item_id"  parameterType="java.util.Map">
+        INSERT INTO t_reading_path_item (chapter_id, reading_times, next_reading_path_id, reading_time, `order`)
         VALUES (#{chapterId}, #{readingTimes}, #{nextReadingPathId}, #{readingTime}, #{order});
     </insert>
 
     <!-- 更新现有的阅读路径项 -->
     <update id="updatePathItem" parameterType="java.util.Map">
         UPDATE t_reading_path_item
-        SET reading_times = #{readingTimes}, next_reading_path_id = #{nextReadingPathId}, reading_time = #{readingTime}, order = #{order}
+        SET reading_times = #{readingTimes}, next_reading_path_id = #{nextReadingPathId}, reading_time = #{readingTime}, `order`= #{order}
         WHERE reading_path_item_id = #{pathItemId} AND is_used=1
     </update>
 

@@ -73,6 +73,9 @@ public class TLibraryServiceImpl implements TLibraryService {
             }
             item.setReadingPathList(readingPathList);
             item.setCurrentProgress(currentProgress);
+            if(currentProgress == null){
+                currentProgress = 3;
+            }
             switch(currentProgress){
                 case  0 :
                     item.setCurrentProgressText("unread");
@@ -83,10 +86,15 @@ public class TLibraryServiceImpl implements TLibraryService {
                 case  2 :
                     item.setCurrentProgressText("Have readed");
                     break;
+                default:
+                    item.setCurrentProgressText("");
+                    break;
             }
             int firstIndex = item.getReadingPathList().size() - 1;
             if(firstIndex>=0) {
                 int secondIndex = item.getReadingPathList().get(firstIndex).getReadingPathItemList().size()-1;
+                //设置：剧本当前被阅读到哪个章节的ID,所对应的历史记录头节点的ID
+                item.setCurrentReadingPathId(item.getReadingPathList().get(firstIndex).getReadingPathId());
                 if(secondIndex>=0){
                     item.setCurrentChapterId(item.getReadingPathList().get(firstIndex).getReadingPathItemList().
                             get(secondIndex).getChapterId());//取最后一个元素

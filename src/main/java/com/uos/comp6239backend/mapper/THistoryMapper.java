@@ -37,7 +37,7 @@ public interface THistoryMapper {
 
     //t_reading_path
 //    创建新的阅读路径
-    void createReadingPath(Map<String, Object> values);
+    int createReadingPath(Map<String, Object> values);
 
 //    更新阅读路径，如修改起始阅读路径项
     void updateReadingPath(Map<String, Object> values);
@@ -53,7 +53,7 @@ public interface THistoryMapper {
 
     //以下是item表
 //    添加新的阅读路径项。
-    void insertPathItem(Map<String, Object> values);
+    int insertPathItem(Map<String, Object> values);
 
 //    更新现有的阅读路径项，如阅读次数。
     void updatePathItem(Map<String, Object> values);

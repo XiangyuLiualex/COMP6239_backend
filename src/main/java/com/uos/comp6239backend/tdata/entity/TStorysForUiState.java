@@ -89,6 +89,12 @@ public class TStorysForUiState {
     private String currentChapterName;
 
     /**
+     * 剧本当前被阅读到哪个章节的ID,所对应的历史记录头节点的ID
+     */
+    @ApiModelProperty(value = "剧本当前被阅读到哪个章节的ID,所对应的历史记录头节点的ID")
+    private Integer currentReadingPathId;
+
+    /**
      * 剧本当前最新的章节历史记录头节点列表
      */
     @ApiModelProperty(value = "剧本当前最新的章节历史记录头节点列表")
