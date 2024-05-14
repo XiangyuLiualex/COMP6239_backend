@@ -2,6 +2,7 @@ package com.uos.comp6239backend.service.impl;
 
 import com.uos.comp6239backend.mapper.TFavoriteAuthorMapper;
 import com.uos.comp6239backend.service.TFavoriteAuthorService;
+import com.uos.comp6239backend.tdata.entity.TStorys;
 import com.uos.comp6239backend.tdata.entity.TUsers;
 import com.uos.comp6239backend.utils.ResponseMap;
 import org.slf4j.Logger;
@@ -47,6 +48,26 @@ public class TFavoriteAuthorServiceImpl implements TFavoriteAuthorService {
     @Override
     @Transactional//添加事务
     public ResponseMap.ResultData tFavoriteAuthorInsert(Map<String, Object> values) {
+        tFavoriteAuthorMapper.tFavoriteAuthorInsert(values);
+        log.info("添加喜欢的作者:"+values);
+        return ResponseMap.ok();
+    }
+
+    //添加喜欢的作者
+    @Override
+    @Transactional//添加事务
+    public ResponseMap.ResultData tFavoriteAuthorInsertByStoryId(Map<String, Object> values) {
+        //根据故事ID查找作者
+        int authorId = tFavoriteAuthorMapper.findAuthorIdByStoryId(values);
+        values.put("authorId",authorId);
+
+        List<TUsers> tUsersList = tFavoriteAuthorMapper.tFavoriteAuthorList(values);//得到读者喜欢的所有作者
+        for(TUsers item : tUsersList) {
+            if (item.getUserId() == authorId) {//已经添加过了
+                return ResponseMap.ok();
+            }
+        }
+        
         tFavoriteAuthorMapper.tFavoriteAuthorInsert(values);
         log.info("添加喜欢的作者:"+values);
         return ResponseMap.ok();

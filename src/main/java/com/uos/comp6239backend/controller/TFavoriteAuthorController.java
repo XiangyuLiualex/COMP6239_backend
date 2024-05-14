@@ -62,6 +62,17 @@ public class TFavoriteAuthorController {
     }
 
     /**
+     *添加喜欢的作者通过故事ID
+     * @param values
+     * @return
+     */
+    @PostMapping("/tFavoriteAuthorInsertByStoryId")
+    @ApiOperation(value = "添加喜欢的作者通过故事ID", notes = "添加喜欢的作者通过故事ID")
+    public ResponseMap.ResultData tFavoriteAuthorInsertByStoryId(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tFavoriteAuthorService.tFavoriteAuthorInsertByStoryId(values);
+    }
+
+    /**
      *根据读者ID和作者ID删除某项喜欢的作者
      * @param values
      * @return

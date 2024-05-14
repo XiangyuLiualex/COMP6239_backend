@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.uos.comp6239backend.mapper.TFavoriteAuthorMapper">
 
-
+  <!--根据故事ID查找作者-->
+  <select id="findAuthorIdByStoryId" resultType="java.lang.Integer">
+    select ts.author_id
+    from t_story ts
+    where  ts.is_used=1 and ts.story_id=#{storyId}
+  </select>
 
 <!--根据读者ID查询其所喜欢的作者-->
   <select id="tFavoriteAuthorList" resultType="com.uos.comp6239backend.tdata.entity.TUsers">

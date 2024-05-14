@@ -111,6 +111,13 @@ public class TLibraryServiceImpl implements TLibraryService {
     @Override
     @Transactional//添加事务
     public ResponseMap.ResultData tLibraryInsert(Map<String, Object> values) {
+        List<TStorys> tStorysList = tLibraryMapper.tLibraryList(values);
+        int storyId = (int) values.get("storyId");
+        for(TStorys item : tStorysList) {
+            if (item.getStoryId() == storyId) {//已经添加过了
+                return ResponseMap.ok();
+            }
+        }
         tLibraryMapper.tLibraryInsert(values);
         log.info("收藏某个剧本:"+values);
         return ResponseMap.ok();
