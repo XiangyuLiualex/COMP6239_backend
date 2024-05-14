@@ -198,14 +198,21 @@
 
 
 
+<!--  &lt;!&ndash;  根据作者ID拿全部StoryId &ndash;&gt;-->
+<!--  <select id="tAuthorStorysByAuthorId"  resultType="java.lang.Integer">-->
+<!--    select story_id from t_author_story where is_used=1 and author_id=#{authorId}-->
+<!--  </select>-->
+
   <!--  根据作者ID拿全部StoryId -->
   <select id="tAuthorStorysByAuthorId"  resultType="java.lang.Integer">
-    select story_id from t_author_story where is_used=1 and author_id=#{authorId}
+    select story_id from t_story where author_id=#{authorId}
   </select>
+
+
 
   <!--  根据故事ID显示本故事的基本信息 -->
   <select id="tAuthorStoryByStoryId" resultType="com.uos.comp6239backend.tdata.entity.TAuthorStorys">
-    select ts.* from t_story ts where is_used=1 and story_id=#{storyId}
+    select ts.* from t_story ts where story_id=#{storyId}
   </select>
 
   <!--  根据章节ID显示本章节的基本信息 -->
