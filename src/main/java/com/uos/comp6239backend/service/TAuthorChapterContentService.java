@@ -15,8 +15,12 @@ import java.util.Map;
  */
 public interface TAuthorChapterContentService {
 
+    ResponseMap.ResultData tryGetChapter(TAuthorChapter chapter);
+
     ResponseMap.ResultData updateAuthorStory(TStorys story);
     ResponseMap.ResultData insertAuthorStory(TStorys story);
+    ResponseMap.ResultData insertAuthorStoryCategory(TStoryCategory storyCategory);
+    ResponseMap.ResultData insertAuthorWithStory(TAuthorWithStory authorWithStory);
 
     ResponseMap.ResultData  deleteAuthorOptionByChapterId( Integer chapterId);
     ResponseMap.ResultData  deleteAuthorContentByChapterId( Integer chapterId);

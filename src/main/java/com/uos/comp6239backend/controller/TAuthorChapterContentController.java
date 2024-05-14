@@ -2,10 +2,7 @@ package com.uos.comp6239backend.controller;
 
 import com.uos.comp6239backend.service.TAuthorChapterContentService;
 import com.uos.comp6239backend.service.TChapterContentService;
-import com.uos.comp6239backend.tdata.entity.TChapter;
-import com.uos.comp6239backend.tdata.entity.TContent;
-import com.uos.comp6239backend.tdata.entity.TOption;
-import com.uos.comp6239backend.tdata.entity.TStorys;
+import com.uos.comp6239backend.tdata.entity.*;
 import com.uos.comp6239backend.utils.ResponseMap;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +30,19 @@ public class TAuthorChapterContentController {
     @Autowired
     private TAuthorChapterContentService tAuthorChapterContentService;
 
+    @PostMapping("/tryGetChapter")
+    @ApiOperation(value = "Update all story related informations by full story", notes = "Update all story related informations by full story")
+    public ResponseMap.ResultData tryGetChapter(@RequestBody TAuthorChapter chapter, HttpServletRequest request){
+        return tAuthorChapterContentService.tryGetChapter(chapter);
+    }
+
+
+    @PostMapping("/tAuthorUpdateStory")
+    @ApiOperation(value = "Update all story related informations by full story", notes = "Update all story related informations by full story")
+    public ResponseMap.ResultData tAuthorUpdateStory(@RequestBody TAuthorStorys value, HttpServletRequest request){
+        return tAuthorChapterContentService.tAuthorUpdateStory(value);
+    }
+
     @PostMapping("/deleteAuthorOptionByChapterId")
     @ApiOperation(value = "根据chapterId删除option", notes = "根据chapterId删除option")
     public ResponseMap.ResultData deleteAuthorOptionByChapterId(@RequestBody Integer chapterId, HttpServletRequest request){
@@ -54,10 +64,20 @@ public class TAuthorChapterContentController {
     public ResponseMap.ResultData updateAuthorStory(@RequestBody TStorys story, HttpServletRequest request){
         return tAuthorChapterContentService.updateAuthorStory(story);
     }
+    @PostMapping("/insertAuthorWithStory")
+    @ApiOperation(value = "根据作者ID显示该作者的所有故事", notes = "根据作者ID显示该作者的所有故事")
+    public ResponseMap.ResultData insertAuthorWithStory(@RequestBody TAuthorWithStory authorWithStory, HttpServletRequest request){
+        return tAuthorChapterContentService.insertAuthorWithStory(authorWithStory);
+    }
+    @PostMapping("/insertAuthorStoryCategory")
+    @ApiOperation(value = "根据作者ID显示该作者的所有故事", notes = "根据作者ID显示该作者的所有故事")
+    public ResponseMap.ResultData insertAuthorStoryCategory(@RequestBody TStoryCategory storyCategory, HttpServletRequest request){
+        return tAuthorChapterContentService.insertAuthorStoryCategory(storyCategory);
+    }
 
     @PostMapping("/insertAuthorStory")
     @ApiOperation(value = "根据作者ID显示该作者的所有故事", notes = "根据作者ID显示该作者的所有故事")
-    public ResponseMap.ResultData insertAuthorStory(@RequestBody TStorys story, HttpServletRequest request){
+    public ResponseMap.ResultData insertAuthorStory(@RequestBody TStorys story, HttpServletRequest request) {
         return tAuthorChapterContentService.insertAuthorStory(story);
     }
     @PostMapping("/insertAuthorChapterList")

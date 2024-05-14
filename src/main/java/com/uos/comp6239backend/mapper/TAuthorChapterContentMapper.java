@@ -24,6 +24,8 @@ public interface TAuthorChapterContentMapper {
     int updateAuthorChapter( @Param("chapter")TChapter chapter);
     int updateAuthorStory( @Param("story")TStorys story);
     int insertAuthorStory( @Param("story")TStorys story);
+    int insertAuthorStoryCategory( @Param("storyCategory")TStoryCategory storyCategory);
+    int insertAuthorWithStory( @Param("authorWithStory")TAuthorWithStory authorWithStory);
     int insertAuthorChapterList( @Param("chapterList")List<TChapter> chapterList);
     int insertAuthorOptionList( @Param("optionList")List<TOption> optionList);
     int insertAuthorContentList( @Param("contentList")List<TContent> contentList);

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * @title: TChapterContentServiceImpl
  * @Author Hym
@@ -31,6 +32,13 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
     @Autowired
     private TAuthorChapterContentMapper tAuthorChapterContentMapper;
 
+    public ResponseMap.ResultData tryGetChapter(TAuthorChapter chapter){
+        TAuthorChapter newChapter=chapter;
+        return ResponseMap.ok();
+    }
+
+
+
     public ResponseMap.ResultData tAuthorUpdateStory(TAuthorStorys values){
         TStorys newStory=new TStorys();
         newStory.setStoryName(values.getStoryName());
@@ -39,19 +47,21 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
         newStory.setStoryCoverUrl("");
         newStory.setAuthorId(values.getAuthorId());
         newStory.setIsUsed(values.getIsUsed());
-        if(values.getStoryId()>0){
-            newStory.setStoryId(values.getStoryId());
-//            Update story
-
-        }else{
+        newStory.setStoryId(values.getStoryId());
 //            Insert story
+            tAuthorChapterContentMapper.insertAuthorStory(newStory);
+
 //            Insert type category
-//            Insert author_story
-        }
+            TStoryCategory storyCategory=new TStoryCategory();
+            storyCategory.setCategoryId(values.getStoryCategory());
+            storyCategory.setIsUsed(1);
+            storyCategory.setStoryId(values.getStoryId());
+            tAuthorChapterContentMapper.insertAuthorStoryCategory(storyCategory);
 
 
-        List<TChapter> insertChapterList=new ArrayList<>();
-        List<TChapter> updateChapterList=new ArrayList<>();
+
+//        List<TChapter> insertChapterList=new ArrayList<>();
+//        List<TChapter> updateChapterList=new ArrayList<>();
         List<TContent> insertContentList=new ArrayList<>();
         List<TOption> insertOptionList=new ArrayList<>();
         for(TAuthorChapter chapter: values.getChapterList()){
@@ -60,48 +70,62 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
             newChapter.setStoryId(chapter.getStoryId());
             newChapter.setIsEnd(chapter.getIsEnd());
             newChapter.setIsUsed(1);
-            if(chapter.getChapterId()>0) {
+
                 newChapter.setChapterId(chapter.getChapterId());
-                updateChapterList.add(newChapter);
+//                updateChapterList.add(newChapter);
                 //        Update chapter
-
+                tAuthorChapterContentMapper.updateAuthorChapter(newChapter);
                 //删除此chapter.getChapterId()对应的所有content和option
-            }else{
-                insertChapterList.add(newChapter);
-            }
-
-
+                tAuthorChapterContentMapper.deleteAuthorContentByChapterId(chapter.getChapterId());
+                tAuthorChapterContentMapper.deleteAuthorOptionByChapterId(chapter.getChapterId());
+//                insertChapterList.add(newChapter);
             int i=0;
-            for(TContent content: chapter.getTContentList()){
-                TContent newContent=new TContent();
-                newContent.setChapterId(content.getChapterId());
-                newContent.setContentData(content.getContentData());
-                newContent.setContentType(content.getContentType());
-                newContent.setOrder(i);
-                newContent.setIsUsed(1);
-                insertContentList.add(newContent);
-                i++;
+            if(chapter.getTContentList()!=null){
+                for(TContent content: chapter.getTContentList()){
+                    TContent newContent=new TContent();
+                    newContent.setChapterId(content.getChapterId());
+                    newContent.setContentData(content.getContentData());
+                    newContent.setContentType(content.getContentType());
+                    newContent.setOrder(i);
+                    newContent.setIsUsed(1);
+                    insertContentList.add(newContent);
+                    i++;
+                }
             }
             i=0;
-            for(TOption option: chapter.getTOptionList()){
-                TOption newOption=new TOption();
-                newOption.setChapterId(option.getOptionId());
-                newOption.setOptionName(option.getOptionName());
-                newOption.setNextChapterId(option.getNextChapterId());
-                newOption.setOrder(i);
-                newOption.setIsUsed(1);
-                insertOptionList.add(newOption);
-                i++;
+            if(chapter.getTOptionList()!=null){
+                for(TOption option: chapter.getTOptionList()){
+                    TOption newOption=new TOption();
+                    newOption.setChapterId(option.getOptionId());
+                    newOption.setOptionName(option.getOptionName());
+                    newOption.setNextChapterId(option.getNextChapterId());
+                    newOption.setOrder(i);
+                    newOption.setIsUsed(1);
+                    insertOptionList.add(newOption);
+                    i++;
+                }
             }
+        }
+//        if(insertChapterList.size()>0){
+//            tAuthorChapterContentMapper.insertAuthorChapterList(insertChapterList);
+//        }
+        if(insertOptionList.size()>0){
+            tAuthorChapterContentMapper.insertAuthorOptionList(insertOptionList);
+        }
+        if(insertContentList.size()>0){
+            tAuthorChapterContentMapper.insertAuthorContentList(insertContentList);
         }
 
 //        Insert chapterlist
+//        tAuthorChapterContentMapper.insertAuthorChapterList(insertChapterList);
 //        Insert optionList
+//        tAuthorChapterContentMapper.insertAuthorOptionList(insertOptionList);
 //        insert contentList
+//        tAuthorChapterContentMapper.insertAuthorContentList(insertContentList);
 
 
 
-        return ResponseMap.ok();
+        return ResponseMap.ok(1);
     }
 
     @Override
@@ -126,11 +150,21 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
         int insertLines=tAuthorChapterContentMapper.updateAuthorStory(story);
         return ResponseMap.ok(insertLines>0);
     }
+    @Override
+    public ResponseMap.ResultData insertAuthorWithStory(TAuthorWithStory authorWithStory){
+        int insertLines=tAuthorChapterContentMapper.insertAuthorWithStory(authorWithStory);
+        return ResponseMap.ok(insertLines>0);
+    }
+    @Override
+    public ResponseMap.ResultData insertAuthorStoryCategory(TStoryCategory storyCategory){
+        int insertLines=tAuthorChapterContentMapper.insertAuthorStoryCategory(storyCategory);
+        return ResponseMap.ok(insertLines>0);
+    }
 
     @Override
-    public ResponseMap.ResultData insertAuthorStory(TStorys story){
-        int insertLines=tAuthorChapterContentMapper.insertAuthorStory(story);
-        return ResponseMap.ok(insertLines>0);
+    public ResponseMap.ResultData insertAuthorStory(TStorys story) {
+        tAuthorChapterContentMapper.insertAuthorStory(story);
+        return ResponseMap.ok(story.getStoryId());
     }
     @Override
     public ResponseMap.ResultData insertAuthorChapterList(List<TChapter> chapterList){

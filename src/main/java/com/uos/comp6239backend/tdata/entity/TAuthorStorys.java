@@ -2,10 +2,7 @@ package com.uos.comp6239backend.tdata.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +15,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Data
+@NoArgsConstructor
 @ApiModel(description = "剧本实体")
 @Getter
 @Setter
@@ -69,5 +67,8 @@ public class TAuthorStorys implements Serializable {
      */
     @ApiModelProperty(value = "isUsed")
     private Integer isUsed;
+
+    @ApiModelProperty(value = "storyCategoryId")
+    private Integer storyCategory;
 
 }

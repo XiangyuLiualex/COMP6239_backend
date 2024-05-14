@@ -15,8 +15,38 @@
     WHERE story_id = #{story.storyId}
   </update>
 
-  <!-- Insert Story -->
-  <insert id="insertAuthorStory" parameterType="com.uos.comp6239backend.tdata.entity.TStorys">
+<!--  &lt;!&ndash; Insert a new story-category relationship into the database &ndash;&gt;-->
+<!--  <insert id="insertAuthorStoryCategory" parameterType="com.uos.comp6239backend.tdata.entity.TStoryCategory">-->
+<!--    INSERT INTO t_story_category (story_id, category_id, is_used)-->
+<!--    VALUES (#{storyCategory.storyId}, #{storyCategory.categoryId}, #{storyCategory.isUsed})-->
+<!--  </insert>-->
+
+<!--  &lt;!&ndash; Insert a new author-story relationship into the database &ndash;&gt;-->
+<!--  <insert id="insertAuthorWithStory" parameterType="com.uos.comp6239backend.tdata.entity.TAuthorWithStory">-->
+<!--    INSERT INTO t_author_story (author_id, story_id, is_used)-->
+<!--    VALUES (#{authorWithStory.authorId}, #{authorWithStory.storyId}, #{authorWithStory.isUsed})-->
+<!--  </insert>-->
+
+<!--  <insert id="insertAuthorStoryCategory" parameterType="com.uos.comp6239backend.tdata.entity.TStoryCategory">-->
+<!--    INSERT INTO t_story_category (story_id, category_id, is_used)-->
+<!--    VALUES (#{storyCategory.storyId}, #{storyCategory.categoryId}, #{storyCategory.isUsed})-->
+<!--      ON DUPLICATE KEY UPDATE-->
+<!--                         is_used = VALUES(storyCategory.is_used)-->
+<!--  </insert>-->
+
+  <insert id="insertAuthorWithStory" parameterType="com.uos.comp6239backend.tdata.entity.TAuthorWithStory">
+    INSERT IGNORE INTO t_author_story (author_id, story_id, is_used)
+    VALUES (#{authorWithStory.authorId}, #{authorWithStory.storyId}, #{authorWithStory.isUsed})
+  </insert>
+
+
+  <insert id="insertAuthorStoryCategory">
+    INSERT IGNORE INTO t_story_category (story_id, category_id, is_used)
+    VALUES (#{storyCategory.storyId}, #{storyCategory.categoryId}, #{storyCategory.isUsed})
+  </insert>
+
+
+  <insert id="insertAuthorStory" parameterType="com.uos.comp6239backend.tdata.entity.TStorys" useGeneratedKeys="true" keyProperty="story.storyId">
     INSERT INTO t_story (
       story_id,
       story_name,
@@ -26,31 +56,71 @@
       author_id,
       is_used
     ) VALUES (
-     #{story.storyId},
-     #{story.storyName},
-     #{story.storyDescription},
-     #{story.storyTrends},
-     #{story.storyCoverUrl},
-     #{story.authorId},
-     #{story.isUsed}
+               #{story.storyId},
+               #{story.storyName},
+               #{story.storyDescription},
+               #{story.storyTrends},
+               #{story.storyCoverUrl},
+               #{story.authorId},
+               #{story.isUsed}
              )
+      ON DUPLICATE KEY UPDATE
+                         story_name = VALUES(story_name),
+                         story_description = VALUES(story_description),
+                         story_trends = VALUES(story_trends),
+                         story_cover_url = VALUES(story_cover_url),
+                         author_id = VALUES(author_id),
+                         is_used = VALUES(is_used)
   </insert>
 
 
 
-<!--  updateChapter-->
-  <update id="updateAuthorChapter">
-    UPDATE t_chapter
-    SET
-      chapter_title = #{chapter.chapterTitle},
-      chapter_number = #{chapter.chapterNumber},
-      story_id = #{chapter.storyId},
-      notes = #{chapter.notes},
-      music = #{chapter.music},
-      is_end = #{chapter.isEnd},
-      is_used = #{chapter.isUsed}
-    WHERE chapter_id = #{chapter.chapterId}
-  </update>
+
+
+
+<!--  &lt;!&ndash;  updateChapter&ndash;&gt;-->
+<!--  <update id="updateAuthorChapter">-->
+<!--    UPDATE t_chapter-->
+<!--    SET-->
+<!--      chapter_title = #{chapter.chapterTitle},-->
+<!--      chapter_number = #{chapter.chapterNumber},-->
+<!--      story_id = #{chapter.storyId},-->
+<!--      notes = #{chapter.notes},-->
+<!--      music = #{chapter.music},-->
+<!--      is_end = #{chapter.isEnd},-->
+<!--      is_used = #{chapter.isUsed}-->
+<!--    WHERE chapter_id = #{chapter.chapterId}-->
+<!--  </update>-->
+
+  <insert id="updateAuthorChapter" parameterType="com.uos.comp6239backend.tdata.entity.TChapter" useGeneratedKeys="true" keyProperty="chapter.chapterId">
+    INSERT INTO t_chapter (
+      chapter_id,
+      chapter_title,
+      chapter_number,
+      story_id,
+      notes,
+      music,
+      is_end,
+      is_used
+    ) VALUES (
+               #{chapter.chapterId},
+               #{chapter.chapterTitle},
+               #{chapter.chapterNumber},
+               #{chapter.storyId},
+               #{chapter.notes},
+               #{chapter.music},
+               #{chapter.isEnd},
+               #{chapter.isUsed}
+             )
+      ON DUPLICATE KEY UPDATE
+                         chapter_title = VALUES(chapter_title),
+                         chapter_number = VALUES(chapter_number),
+                         story_id = VALUES(story_id),
+                         notes = VALUES(notes),
+                         music = VALUES(music),
+                         is_end = VALUES(is_end),
+                         is_used = VALUES(is_used)
+  </insert>
 
 
 
@@ -58,10 +128,11 @@
   <!--  insert ChapterList-->
   <insert id="insertAuthorChapterList" parameterType="java.util.List">
     INSERT INTO t_chapter
-    (chapter_title, chapter_number, story_id, notes, music, is_end, is_used)
+    (chapter_id, chapter_title, chapter_number, story_id, notes, music, is_end, is_used)
     VALUES
     <foreach collection="chapterList" item="item" index="index" separator=",">
       (
+      #{item.chapterId, jdbcType=INTEGER},
       #{item.chapterTitle, jdbcType=VARCHAR},
       #{item.chapterNumber, jdbcType=INTEGER},
       #{item.storyId, jdbcType=INTEGER},
