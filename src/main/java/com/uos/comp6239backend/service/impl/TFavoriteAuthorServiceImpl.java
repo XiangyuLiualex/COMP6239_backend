@@ -33,6 +33,7 @@ public class TFavoriteAuthorServiceImpl implements TFavoriteAuthorService {
     public ResponseMap.ResultData tFavoriteAuthorList(Map<String, Object> values) {
         List<TUsers> favoriteAuthorList = tFavoriteAuthorMapper.tFavoriteAuthorList(values);
         log.info("根据读者ID查询其所喜欢的作者:"+values);
+        log.info("结果:"+favoriteAuthorList);
         return ResponseMap.ok(favoriteAuthorList);
     }
 
@@ -41,6 +42,7 @@ public class TFavoriteAuthorServiceImpl implements TFavoriteAuthorService {
     public ResponseMap.ResultData tFavoriteAuthorListByAuthorName(Map<String, Object> values) {
         List<TUsers> favoriteAuthorList = tFavoriteAuthorMapper.tFavoriteAuthorListByAuthorName(values);
         log.info("根据作者名模糊查询其所喜欢的作者:"+values);
+        log.info("结果:"+favoriteAuthorList);
         return ResponseMap.ok(favoriteAuthorList);
     }
 
@@ -67,7 +69,7 @@ public class TFavoriteAuthorServiceImpl implements TFavoriteAuthorService {
                 return ResponseMap.ok();
             }
         }
-        
+
         tFavoriteAuthorMapper.tFavoriteAuthorInsert(values);
         log.info("添加喜欢的作者:"+values);
         return ResponseMap.ok();

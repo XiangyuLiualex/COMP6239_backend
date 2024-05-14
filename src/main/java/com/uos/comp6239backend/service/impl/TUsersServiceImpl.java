@@ -44,6 +44,7 @@ public class TUsersServiceImpl implements TUsersService {
     @Override
     public ResponseMap.ResultData selectProfileByUserId(Map<String, Object> values) {
         log.info("selectProfileByUserId:"+values);
+        log.info("结果:"+tUsersMapper.selectProfileByUserId(values));
         return ResponseMap.ok(tUsersMapper.selectProfileByUserId(values));
     }
 

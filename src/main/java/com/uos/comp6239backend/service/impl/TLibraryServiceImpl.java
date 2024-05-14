@@ -41,6 +41,7 @@ public class TLibraryServiceImpl implements TLibraryService {
     public ResponseMap.ResultData selectReaderStoryDetail(Map<String, Object> values) {
         List<TStoryDetail> tStoryDetails = tLibraryMapper.selectReaderStoryDetail(values);
         log.info("根据读者ID展示其收藏的所有的书和剧本作者，阅读进度,返回TStoryDetail:"+values);
+        log.info("结果:"+tStoryDetails);
         return ResponseMap.ok(tStoryDetails);
     }
 
@@ -49,6 +50,7 @@ public class TLibraryServiceImpl implements TLibraryService {
     public ResponseMap.ResultData selectAllStoryDetail(Map<String, Object> values) {
         List<TStoryDetail> tStoryDetails = tLibraryMapper.selectAllStoryDetail(values);
         log.info("首页展示所有的书,返回TStoryDetail:"+values);
+        log.info("结果:"+tStoryDetails);
         return ResponseMap.ok(tStoryDetails);
     }
 
@@ -104,6 +106,7 @@ public class TLibraryServiceImpl implements TLibraryService {
             }
         }
         log.info("根据读者ID和剧本ID和剧本作者ID展示剧本作者，阅读进度:"+values);
+        log.info("结果:"+tStorysForUiStates);
         return ResponseMap.ok(tStorysForUiStates);
     }
 
@@ -112,6 +115,7 @@ public class TLibraryServiceImpl implements TLibraryService {
     public ResponseMap.ResultData tLibraryList(Map<String, Object> values) {
         List<TStorys> tStorysList = tLibraryMapper.tLibraryList(values);
         log.info("根据读者ID展示图书馆:"+values);
+        log.info("结果:"+tStorysList);
         return ResponseMap.ok(tStorysList);
     }
 
@@ -187,6 +191,7 @@ public class TLibraryServiceImpl implements TLibraryService {
 //            }
         }
         log.info("根据null展示剧本作者，阅读进度:"+values);
+        log.info("结果:"+tStorysForUiStates);
         return ResponseMap.ok(tStorysForUiStates);
     }
 }

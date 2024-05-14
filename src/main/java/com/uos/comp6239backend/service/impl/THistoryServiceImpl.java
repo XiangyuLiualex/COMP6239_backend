@@ -56,6 +56,7 @@ public class THistoryServiceImpl implements THistoryService {
     public ResponseMap.ResultData findHistoryByReaderId(Map<String, Object> values) {
         List<ReaderStoryHistory> histories = tHistoryMapper.findHistoryByReaderId(values);
         log.info("根据读者ID查找其所有的阅读历史: " + values);
+        log.info("结果:"+histories);
         return ResponseMap.ok(histories);
     }
 
@@ -64,6 +65,7 @@ public class THistoryServiceImpl implements THistoryService {
     public ResponseMap.ResultData findHistoryByStoryId(Map<String, Object> values) {
         List<ReaderStoryHistory> histories = tHistoryMapper.findHistoryByStoryId(values);
         log.info("根据故事ID查找所有相关的阅读历史: " + values);
+        log.info("结果:"+histories);
         return ResponseMap.ok(histories);
     }
 
@@ -87,6 +89,7 @@ public class THistoryServiceImpl implements THistoryService {
     public ResponseMap.ResultData getReadingPathById(Map<String, Object> values) {
         ReadingPath path = tHistoryMapper.getReadingPathById(values);
         log.info("根据路径ID获取阅读路径详情: " + values);
+        log.info("结果:"+path);
         return ResponseMap.ok(path);
     }
 
@@ -101,6 +104,7 @@ public class THistoryServiceImpl implements THistoryService {
             List<ReadingPathItem> readingPathItemList = tHistoryMapper.getPathItemsByTReadingPathId(param);
             item.setReadingPathItemList(readingPathItemList);
         }
+        log.info("结果:"+paths);
         return ResponseMap.ok(paths);
     }
 
@@ -124,6 +128,7 @@ public class THistoryServiceImpl implements THistoryService {
     public ResponseMap.ResultData getPathItemsByChapterId(Map<String, Object> values) {
         List<ReadingPathItem> pathItems = tHistoryMapper.getPathItemsByChapterId(values);
         log.info("根据章节ID获取所有路径项: " + values);
+        log.info("结果:"+pathItems);
         return ResponseMap.ok(pathItems);
     }
 
@@ -132,6 +137,7 @@ public class THistoryServiceImpl implements THistoryService {
     public ResponseMap.ResultData getPathItemById(Map<String, Object> values) {
         ReadingPathItem pathItem = tHistoryMapper.getPathItemById(values);
         log.info("根据路径项ID获取详情: " + values);
+        log.info("结果:"+pathItem);
         return ResponseMap.ok(pathItem);
     }
 }
