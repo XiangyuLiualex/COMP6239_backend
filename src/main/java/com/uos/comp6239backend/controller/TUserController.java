@@ -63,5 +63,10 @@ public class TUserController {
         return tUsersService.selectProfileByUserId(values);
     }
 
+    @PostMapping("/selectProfileByEmail")
+    @ApiOperation(value = "selectProfileByEmail", notes = "selectProfileByEmail")
+    public ResponseMap.ResultData selectProfileByEmail(@RequestBody Map<String,Object> values, HttpServletRequest request){
+        return tUsersService.selectProfileByEmail(values);
+    }
 
 }

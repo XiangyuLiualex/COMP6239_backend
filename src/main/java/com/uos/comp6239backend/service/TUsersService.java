@@ -21,4 +21,6 @@ public interface TUsersService {
 
     ResponseMap.ResultData selectProfileByUserId(Map<String, Object> values);
 
+    ResponseMap.ResultData selectProfileByEmail(Map<String, Object> values);
+
 }

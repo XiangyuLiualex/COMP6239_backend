@@ -22,4 +22,5 @@ public interface TUsersMapper {
     void profileUpdate(Map<String, Object> values);
 
     Profile selectProfileByUserId(Map<String, Object> values);
+    Profile selectProfileByEmail(Map<String, Object> values);
 }

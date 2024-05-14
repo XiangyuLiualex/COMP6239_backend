@@ -28,7 +28,7 @@ public class Profile implements Serializable {
      * 用户ID
      */
     @ApiModelProperty(value = "用户ID")
-    private String userId;
+    private Integer userId;
 
     /**
      * 用户名

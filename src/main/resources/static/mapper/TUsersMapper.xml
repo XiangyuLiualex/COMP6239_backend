@@ -14,11 +14,9 @@
     </resultMap>
     <!--  新增用户 -->
     <insert id="profileInsert" parameterType="java.util.Map">
-        insert into t_user
+        insert into t_users
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
-                user_id,
-            </if>
+
             <if test="username != null">
                 username,
             </if>
@@ -43,29 +41,27 @@
             is_used
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
-                #{userId,,jdbcType=INTEGER},
-            </if>
+
             <if test="username != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{username,jdbcType=VARCHAR},
             </if>
             <if test="realName != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{realName,jdbcType=VARCHAR},
             </if>
             <if test="selfDescription != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{selfDescription,jdbcType=VARCHAR},
             </if>
             <if test="email != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},
             </if>
             <if test="telephone != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{telephone,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR},
             </if>
             <if test="profilePictureLink != null">
-                #{userId,,jdbcType=VARCHAR},
+                #{profilePictureLink,jdbcType=VARCHAR},
             </if>
             1
         </trim>
@@ -73,7 +69,7 @@
 
     <!--  根据ID更新某项 -->
     <update id="profileUpdate"  parameterType="java.util.Map">
-        update t_user
+        update t_users
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
@@ -113,9 +109,23 @@
         telephone AS "telephone",
         password AS "password",
         photo_url AS "profilePictureLink"
-    FROM t_user
+    FROM t_users
     WHERE user_id = #{userId}
 </select>
+
+    <select id="selectProfileByEmail" parameterType="string" resultMap="profileResultMap">
+        SELECT
+            user_id AS "userId",
+            username AS "username",
+            real_name AS "realName",
+            self_description AS "selfDescription",
+            email AS "email",
+            telephone AS "telephone",
+            password AS "password",
+            photo_url AS "profilePictureLink"
+        FROM t_users
+        WHERE email = #{email}
+    </select>
 
 
 
