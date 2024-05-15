@@ -96,7 +96,7 @@ public class TAuthorChapterContentServiceImpl implements TAuthorChapterContentSe
             if(chapter.getTOptionList()!=null){
                 for(TOption option: chapter.getTOptionList()){
                     TOption newOption=new TOption();
-                    newOption.setChapterId(option.getOptionId());
+                    newOption.setChapterId(option.getChapterId());
                     newOption.setOptionName(option.getOptionName());
                     newOption.setNextChapterId(option.getNextChapterId());
                     newOption.setOrder(i);
